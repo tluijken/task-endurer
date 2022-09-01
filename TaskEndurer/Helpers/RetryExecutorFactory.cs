@@ -17,10 +17,12 @@ internal static class RetryExecutorFactory
     {
         // We will always use the default retry policy.
         var baseExecutor = new RetryExecutor(policy);
-       
-        return policy.MaxDuration.HasValue ?
+
+        return policy.MaxDuration.HasValue
+            ?
             // Use the until expired executor and decorate it with the base executor.
-            new UntilExpiredRetryExecutor(policy, baseExecutor) :
+            new UntilExpiredRetryExecutor(policy, baseExecutor)
+            :
             // Otherwise the base executor.
             baseExecutor;
     }

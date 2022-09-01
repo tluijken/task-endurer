@@ -26,12 +26,12 @@ internal sealed class UntilExpiredRetryExecutor : IRetryExecutor
     public async Task<T> ExecuteAsync<T>(Func<Task<T>> taskToExecute, CancellationToken cancellationToken = default)
     {
         if (!_retryPolicy.MaxDuration.HasValue)
-        {
-            throw new NotSupportedException("The maximum duration is not set and cannot be used with an executor that waits until the timespan is expired.");
-        }
+            throw new NotSupportedException(
+                "The maximum duration is not set and cannot be used with an executor that waits until the timespan is expired.");
 
         using var maximumWaitCancellationToken = new CancellationTokenSource(_retryPolicy.MaxDuration.Value);
-        using var cancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, maximumWaitCancellationToken.Token);
+        using var cancellationTokenSource =
+            CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, maximumWaitCancellationToken.Token);
 
         // Execute the task.
         return await _decorated.ExecuteAsync(taskToExecute, cancellationTokenSource.Token).ConfigureAwait(false);
@@ -47,12 +47,12 @@ internal sealed class UntilExpiredRetryExecutor : IRetryExecutor
     public async Task ExecuteAsync(Func<Task> taskToExecute, CancellationToken cancellationToken = default)
     {
         if (!_retryPolicy.MaxDuration.HasValue)
-        {
-            throw new NotSupportedException("The maximum duration is not set and cannot be used with an executor that waits until the timespan is expired.");
-        }
+            throw new NotSupportedException(
+                "The maximum duration is not set and cannot be used with an executor that waits until the timespan is expired.");
 
         using var maximumWaitCancellationToken = new CancellationTokenSource(_retryPolicy.MaxDuration.Value);
-        using var cancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, maximumWaitCancellationToken.Token);
+        using var cancellationTokenSource =
+            CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, maximumWaitCancellationToken.Token);
         // Execute the task.
         await _decorated.ExecuteAsync(taskToExecute, cancellationTokenSource.Token).ConfigureAwait(false);
     }

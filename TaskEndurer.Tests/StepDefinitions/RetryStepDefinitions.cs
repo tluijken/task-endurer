@@ -9,13 +9,13 @@ namespace TaskEndurer.Tests.StepDefinitions;
 [Binding]
 public class RetryStepDefinitions
 {
-    private readonly IServiceProvider _serviceProvider;
     private const string MaxFailCountKey = "maxRetryCount";
     private const string RetryCountKey = "retryCount";
     private const string RetryExecutorKey = "retryExecutor";
     private const string RetryExceptionKey = "retryException";
     private const string TaskResultKey = "taskResult";
     private static readonly TimeSpan DefaultRetryInterval = TimeSpan.FromMilliseconds(100);
+    private readonly IServiceProvider _serviceProvider;
 
     public RetryStepDefinitions(IServiceProvider serviceProvider)
     {
@@ -82,10 +82,10 @@ public class RetryStepDefinitions
         var retryExecutor = RetryPolicyBuilder.Create().WithMaxRetries(numberOrRetries)
             .ContinueOnException<ApplicationException>(true)
             .Build();
-        
+
         scenarioContext.Set(retryExecutor, RetryExecutorKey);
     }
-    
+
     [Given(@"We have a retry policy with graceful exception handling that state the maximum number of retries is (.*)")]
     public void GivenWeHaveARetryPolicyThatStateTheMaximumNumberOfRetriesIsGracefully(int numberOrRetries)
     {
@@ -94,7 +94,7 @@ public class RetryStepDefinitions
             .ContinueOnException<ApplicationException>(true)
             .WithGracefulExceptionHandling()
             .Build();
-        
+
         scenarioContext.Set(retryExecutor, RetryExecutorKey);
     }
 
@@ -104,7 +104,6 @@ public class RetryStepDefinitions
         var scenarioContext = _serviceProvider.GetRequiredService<ScenarioContext>();
         var exception = scenarioContext.Get<Exception>(RetryExceptionKey);
         Assert.NotNull(exception);
-        
     }
 
     [Then(@"the task should not fail")]
@@ -121,7 +120,7 @@ public class RetryStepDefinitions
         var retryExecutor = RetryPolicyBuilder.Create().WithMaxDuration(TimeSpan.FromSeconds(maximumDurationInSeconds))
             .ContinueOnException<ApplicationException>(true)
             .Build();
-        
+
         scenarioContext.Set(retryExecutor, RetryExecutorKey);
     }
 }

@@ -25,11 +25,11 @@ internal struct RetryPolicy
     {
         ExceptionCallbacksByType.Add(typeof(TException), callback);
     }
- 
+
     /// <summary>
     ///     Registered exception types that should be retried.
     /// </summary>
-    internal Dictionary<Type, Func<bool>> ExceptionCallbacksByType { get; }= new();
+    internal Dictionary<Type, Func<bool>> ExceptionCallbacksByType { get; } = new();
 
     /// <summary>
     ///     The maximum number of retries.
@@ -50,13 +50,13 @@ internal struct RetryPolicy
     ///     Defines the delay strategy to use between retries.
     /// </summary>
     /// <remarks>
-    ///     Defaults to <see cref="TaskEndurer.DelayStrategy.Linear" />.
+    ///     Defaults to <see cref="BackoffStrategy.Fixed" />.
     /// </remarks>
     [SuppressMessage("ReSharper", "AutoPropertyCanBeMadeGetOnly.Global")]
-    public DelayStrategy DelayStrategy { get; internal set; } = DelayStrategy.Linear;
+    public BackoffStrategy BackoffStrategy { get; internal set; } = BackoffStrategy.Fixed;
 
     /// <summary>
-    /// Specifies that any exceptions should be gracefully handled and not thrown once the retry count has been reached.
+    ///     Specifies that any exceptions should be gracefully handled and not thrown once the retry count has been reached.
     /// </summary>
     public bool GracefulExceptionHandling { get; internal set; }
 }

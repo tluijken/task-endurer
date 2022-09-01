@@ -1,48 +1,48 @@
 ﻿<Project>
-  <PropertyGroup>
-    <Copyright>Copyright (c) Baseflow</Copyright>
-    <Authors>Baseflow</Authors>
-    <Owners>Baseflow</Owners>
+    <PropertyGroup>
+        <Copyright>Copyright (c) Baseflow</Copyright>
+        <Authors>Baseflow</Authors>
+        <Owners>Baseflow</Owners>
 
-    <RepositoryUrl>https://github.com/Baseflow/voortman-pds</RepositoryUrl>
-    <RepositoryType>git</RepositoryType>
-    <Product>$(AssemblyName) ($(TargetFramework))</Product>
-    <NeutralLanguage>en</NeutralLanguage>
+        <RepositoryUrl>https://github.com/Baseflow/voortman-pds</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <Product>$(AssemblyName) ($(TargetFramework))</Product>
+        <NeutralLanguage>en</NeutralLanguage>
 
-    <Nullable>enable</Nullable>
-    <LangVersion>10.0</LangVersion>
-    <NoWarn>$(NoWarn);1591;1701;1702;1705;VSX1000;NU1603;CA1014;CA1716;AD0001</NoWarn>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <Version>0.0.1</Version>
-    <AssemblyVersion>0.0.1</AssemblyVersion>
-    <IsTestProject>$(MSBuildProjectName.Contains('Test'))</IsTestProject>
-  </PropertyGroup>
+        <Nullable>enable</Nullable>
+        <LangVersion>10.0</LangVersion>
+        <NoWarn>$(NoWarn);1591;1701;1702;1705;VSX1000;NU1603;CA1014;CA1716;AD0001</NoWarn>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+        <Version>0.0.1</Version>
+        <AssemblyVersion>0.0.1</AssemblyVersion>
+        <IsTestProject>$(MSBuildProjectName.Contains('Test'))</IsTestProject>
+    </PropertyGroup>
 
-  <PropertyGroup Condition="'$(IsTestProject)' != 'true'">
-    <IncludeOpenAPIAnalyzers>true</IncludeOpenAPIAnalyzers>
-    <EnableNETAnalyzers>true</EnableNETAnalyzers>
-    <AnalysisLevel>latest</AnalysisLevel>
-    <AnalysisMode>AllEnabledByDefault</AnalysisMode>
-  </PropertyGroup>
+    <PropertyGroup Condition="'$(IsTestProject)' != 'true'">
+        <IncludeOpenAPIAnalyzers>true</IncludeOpenAPIAnalyzers>
+        <EnableNETAnalyzers>true</EnableNETAnalyzers>
+        <AnalysisLevel>latest</AnalysisLevel>
+        <AnalysisMode>AllEnabledByDefault</AnalysisMode>
+    </PropertyGroup>
 
-  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-  </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    </PropertyGroup>
 
-  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-  </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Roslynator.Analyzers" Version="4.1.1">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="AsyncFixer" Version="1.6.0">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="IDisposableAnalyzers" Version="4.0.2">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Roslynator.Analyzers" Version="4.1.1">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="AsyncFixer" Version="1.6.0">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="IDisposableAnalyzers" Version="4.0.2">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+    </ItemGroup>
 </Project>
