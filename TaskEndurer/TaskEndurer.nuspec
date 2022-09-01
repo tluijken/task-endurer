@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <projectUrl>https://github.com/tluijken/task-endurer</projectUrl>
+    <license type="expression">MIT</license>
+    <icon>icon.png</icon>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <releaseNotes>Added package meta data</releaseNotes>
+    <tags>retry utility task async backoff</tags>
+    <icon>icon.png</icon>
+    <description>Task Endurer is a library that lets you easily retry asynchronous tasks based on a given policy.</description>
+  </metadata>
+
+  <files>
+    <file src="icon.png" target="" />
+  </files>
+</package>
