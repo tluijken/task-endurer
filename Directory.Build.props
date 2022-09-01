@@ -1,10 +1,10 @@
 ﻿<Project>
     <PropertyGroup>
-        <Copyright>Copyright (c) Baseflow</Copyright>
-        <Authors>Baseflow</Authors>
-        <Owners>Baseflow</Owners>
+        <Copyright>Copyright (c) Thomas Luijken</Copyright>
+        <Authors>Thomas Luijken</Authors>
+        <Owners>Thomas Luijken</Owners>
 
-        <RepositoryUrl>https://github.com/Baseflow/voortman-pds</RepositoryUrl>
+        <RepositoryUrl>https://github.com/tluijken/task-endurer</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <Product>$(AssemblyName) ($(TargetFramework))</Product>
         <NeutralLanguage>en</NeutralLanguage>
@@ -13,8 +13,8 @@
         <LangVersion>10.0</LangVersion>
         <NoWarn>$(NoWarn);1591;1701;1702;1705;VSX1000;NU1603;CA1014;CA1716;AD0001</NoWarn>
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-        <Version>0.0.1</Version>
-        <AssemblyVersion>0.0.1</AssemblyVersion>
+        <Version>0.1.0</Version>
+        <AssemblyVersion>0.1.0</AssemblyVersion>
         <IsTestProject>$(MSBuildProjectName.Contains('Test'))</IsTestProject>
     </PropertyGroup>
 
