@@ -5,11 +5,13 @@ on:
     branches: [ main ]
     paths:
       - '**/*.cs'
+      - '**/*.csproj'
       - '.github/workflows/CODE_COVERAGE_TESTS.yml'
   pull_request:
     branches: [ main ]
     paths:
       - '**/*.cs'
+      - '**/*.csproj'
       - '.github/workflows/CODE_COVERAGE_TESTS.yml'
 
 env:
