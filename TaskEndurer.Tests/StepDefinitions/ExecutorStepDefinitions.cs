@@ -42,7 +42,7 @@ public class ExecutorStepDefinitions
         {
             await executor.ExecuteAsync(() => Task.CompletedTask).ConfigureAwait(false);
         }
-        catch (Exception e)
+        catch (NotSupportedException e)
         {
             scenarioContext.Set(e, Constants.RetryExceptionKey);
         }

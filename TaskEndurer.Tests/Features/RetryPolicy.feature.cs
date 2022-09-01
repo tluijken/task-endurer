@@ -80,16 +80,16 @@ namespace TaskEndurer.Tests.Features
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Retry a task a for a maximum amount of retries unsuccessfully")]
+        [Xunit.SkippableFactAttribute(DisplayName="Retry a task with a result a for a maximum amount of retries unsuccessfully")]
         [Xunit.TraitAttribute("FeatureTitle", "RetryFeature")]
-        [Xunit.TraitAttribute("Description", "Retry a task a for a maximum amount of retries unsuccessfully")]
+        [Xunit.TraitAttribute("Description", "Retry a task with a result a for a maximum amount of retries unsuccessfully")]
         [Xunit.TraitAttribute("Category", "retryPolicy")]
-        public void RetryATaskAForAMaximumAmountOfRetriesUnsuccessfully()
+        public void RetryATaskWithAResultAForAMaximumAmountOfRetriesUnsuccessfully()
         {
             string[] tagsOfScenario = new string[] {
                     "retryPolicy"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Retry a task a for a maximum amount of retries unsuccessfully", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Retry a task with a result a for a maximum amount of retries unsuccessfully", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 5
     this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -113,14 +113,14 @@ namespace TaskEndurer.Tests.Features
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Retry a task a for a maximum amount of retries successfully")]
+        [Xunit.SkippableFactAttribute(DisplayName="Retry a task with a result a for a maximum amount of retries successfully")]
         [Xunit.TraitAttribute("FeatureTitle", "RetryFeature")]
-        [Xunit.TraitAttribute("Description", "Retry a task a for a maximum amount of retries successfully")]
-        public void RetryATaskAForAMaximumAmountOfRetriesSuccessfully()
+        [Xunit.TraitAttribute("Description", "Retry a task with a result a for a maximum amount of retries successfully")]
+        public void RetryATaskWithAResultAForAMaximumAmountOfRetriesSuccessfully()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Retry a task a for a maximum amount of retries successfully", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Retry a task with a result a for a maximum amount of retries successfully", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 10
     this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -144,14 +144,14 @@ namespace TaskEndurer.Tests.Features
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Retry a task a for a maximum duration unsuccessfully")]
+        [Xunit.SkippableFactAttribute(DisplayName="Retry a task with a result a for a maximum duration unsuccessfully")]
         [Xunit.TraitAttribute("FeatureTitle", "RetryFeature")]
-        [Xunit.TraitAttribute("Description", "Retry a task a for a maximum duration unsuccessfully")]
-        public void RetryATaskAForAMaximumDurationUnsuccessfully()
+        [Xunit.TraitAttribute("Description", "Retry a task with a result a for a maximum duration unsuccessfully")]
+        public void RetryATaskWithAResultAForAMaximumDurationUnsuccessfully()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Retry a task a for a maximum duration unsuccessfully", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Retry a task with a result a for a maximum duration unsuccessfully", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 15
     this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -175,14 +175,14 @@ namespace TaskEndurer.Tests.Features
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Retry a task a for a maximum duration successfully")]
+        [Xunit.SkippableFactAttribute(DisplayName="Retry a task with a result a for a maximum duration successfully")]
         [Xunit.TraitAttribute("FeatureTitle", "RetryFeature")]
-        [Xunit.TraitAttribute("Description", "Retry a task a for a maximum duration successfully")]
-        public void RetryATaskAForAMaximumDurationSuccessfully()
+        [Xunit.TraitAttribute("Description", "Retry a task with a result a for a maximum duration successfully")]
+        public void RetryATaskWithAResultAForAMaximumDurationSuccessfully()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Retry a task a for a maximum duration successfully", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Retry a task with a result a for a maximum duration successfully", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 20
     this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -206,14 +206,14 @@ namespace TaskEndurer.Tests.Features
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Retry a task a for a maximum amount of retries with graceful exception handling")]
+        [Xunit.SkippableFactAttribute(DisplayName="Retry a task without a result a for a maximum amount of retries unsuccessfully")]
         [Xunit.TraitAttribute("FeatureTitle", "RetryFeature")]
-        [Xunit.TraitAttribute("Description", "Retry a task a for a maximum amount of retries with graceful exception handling")]
-        public void RetryATaskAForAMaximumAmountOfRetriesWithGracefulExceptionHandling()
+        [Xunit.TraitAttribute("Description", "Retry a task without a result a for a maximum amount of retries unsuccessfully")]
+        public void RetryATaskWithoutAResultAForAMaximumAmountOfRetriesUnsuccessfully()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Retry a task a for a maximum amount of retries with graceful exception handling", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Retry a task without a result a for a maximum amount of retries unsuccessfully", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 25
     this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -225,19 +225,143 @@ namespace TaskEndurer.Tests.Features
             {
                 this.ScenarioStart();
 #line 26
+        testRunner.Given("We have a retry policy that state the maximum number of retries is 3", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 27
+        testRunner.When("We execute a task without a result that always fails", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 28
+        testRunner.Then("the task should fail", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="Retry a task without a result a for a maximum amount of retries successfully")]
+        [Xunit.TraitAttribute("FeatureTitle", "RetryFeature")]
+        [Xunit.TraitAttribute("Description", "Retry a task without a result a for a maximum amount of retries successfully")]
+        public void RetryATaskWithoutAResultAForAMaximumAmountOfRetriesSuccessfully()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Retry a task without a result a for a maximum amount of retries successfully", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 30
+    this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 31
+        testRunner.Given("We have a retry policy that state the maximum number of retries is 3", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 32
+        testRunner.When("We execute a task without a result that fails 2 times", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 33
+        testRunner.Then("the task should not fail", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="Retry a task without a result a for a maximum duration unsuccessfully")]
+        [Xunit.TraitAttribute("FeatureTitle", "RetryFeature")]
+        [Xunit.TraitAttribute("Description", "Retry a task without a result a for a maximum duration unsuccessfully")]
+        public void RetryATaskWithoutAResultAForAMaximumDurationUnsuccessfully()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Retry a task without a result a for a maximum duration unsuccessfully", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 35
+    this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 36
+        testRunner.Given("We have a retry policy that state the maximum duration is 3 seconds", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 37
+        testRunner.When("We execute a task without a result that always fails", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 38
+        testRunner.Then("the task should fail", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="Retry a task without a result a for a maximum duration successfully")]
+        [Xunit.TraitAttribute("FeatureTitle", "RetryFeature")]
+        [Xunit.TraitAttribute("Description", "Retry a task without a result a for a maximum duration successfully")]
+        public void RetryATaskWithoutAResultAForAMaximumDurationSuccessfully()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Retry a task without a result a for a maximum duration successfully", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 40
+    this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 41
+        testRunner.Given("We have a retry policy that state the maximum duration is 3 seconds", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 42
+        testRunner.When("We execute a task without a result that fails 10 times", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 43
+        testRunner.Then("the task should not fail", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="Retry a task a for a maximum amount of retries with graceful exception handling")]
+        [Xunit.TraitAttribute("FeatureTitle", "RetryFeature")]
+        [Xunit.TraitAttribute("Description", "Retry a task a for a maximum amount of retries with graceful exception handling")]
+        public void RetryATaskAForAMaximumAmountOfRetriesWithGracefulExceptionHandling()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Retry a task a for a maximum amount of retries with graceful exception handling", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 45
+    this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 46
         testRunner.Given("We have a retry policy with graceful exception handling that state the maximum nu" +
                         "mber of retries is 3", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 27
+#line 47
         testRunner.When("We execute a task that always fails", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 28
+#line 48
         testRunner.Then("the task should not fail", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-#line 29
+#line 49
         testRunner.When("We execute a task that always fails", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 30
+#line 50
         testRunner.Then("the task should not fail", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }

@@ -38,6 +38,12 @@ public class RetryStepDefinitions
         await Task.Delay(Constants.DefaultRetryInterval);
         throw new ApplicationException("Always fails");
     }
+    
+    private static async Task AlwaysFailsNoResult()
+    {
+        await Task.Delay(Constants.DefaultRetryInterval);
+        throw new ApplicationException("Always fails");
+    }
 
     private async Task<bool> FailsWithinAllowedRetries()
     {
@@ -52,6 +58,19 @@ public class RetryStepDefinitions
         throw new ApplicationException($"Should fail within allowed retries ({maxFailCount})");
     }
 
+    private async Task FailsWithinAllowedRetriesNoResult()
+    {
+        await Task.Delay(Constants.DefaultRetryInterval);
+        var scenarioContext = _serviceProvider.GetRequiredService<ScenarioContext>();
+        var retryCount = scenarioContext.ContainsKey(Constants.RetryCountKey) ? scenarioContext.Get<int>(Constants.RetryCountKey) : 0;
+
+        var maxFailCount = scenarioContext.Get<int>(Constants.MaxFailCountKey);
+        if (retryCount >= maxFailCount) return;
+
+        scenarioContext.Set(retryCount + 1, Constants.RetryCountKey);
+        throw new ApplicationException($"Should fail within allowed retries ({maxFailCount})");
+    }
+    
     [When(@"We execute a task that fails (.*) times")]
     public async Task WhenWeExecuteATaskThatFailsTimes(int maxFailCount)
     {
@@ -116,5 +135,36 @@ public class RetryStepDefinitions
             .Build();
 
         scenarioContext.Set(retryExecutor, Constants.RetryExecutorKey);
+    }
+
+    [When(@"We execute a task without a result that fails (.*) times")]
+    public async Task WhenWeExecuteATaskWithoutAResultThatFailsTimes(int maxFailCount)
+    {
+        var scenarioContext = _serviceProvider.GetRequiredService<ScenarioContext>();
+        scenarioContext.Set(maxFailCount, Constants.MaxFailCountKey);
+        var executor = scenarioContext.Get<IRetryExecutor>(Constants.RetryExecutorKey);
+        try
+        {
+            await executor.ExecuteAsync(FailsWithinAllowedRetriesNoResult).ConfigureAwait(false);
+        }
+        catch (Exception e)
+        {
+            scenarioContext.Set(e, Constants.RetryExceptionKey);
+        }
+    }
+
+    [When(@"We execute a task without a result that always fails")]
+    public async Task WhenWeExecuteATaskWithoutAResultThatAlwaysFails()
+    {
+        var scenarioContext = _serviceProvider.GetRequiredService<ScenarioContext>();
+        var executor = scenarioContext.Get<IRetryExecutor>(Constants.RetryExecutorKey);
+        try
+        {
+            await executor.ExecuteAsync(AlwaysFailsNoResult).ConfigureAwait(false);
+        }
+        catch (Exception e)
+        {
+            scenarioContext.Set(e, Constants.RetryExceptionKey);
+        }
     }
 }
