@@ -28,7 +28,6 @@ internal sealed class RetryExecutor : IRetryExecutor
     /// <returns>An awaitable task.</returns>
     public async Task<T> ExecuteAsync<T>(Func<Task<T>> taskToExecute, CancellationToken cancellationToken = default)
     {
-        ArgumentNullException.ThrowIfNull(taskToExecute);
         var retryCount = 0;
         while (true)
             try
@@ -64,7 +63,6 @@ internal sealed class RetryExecutor : IRetryExecutor
     /// <returns>An awaitable task.</returns>
     public async Task ExecuteAsync(Func<Task> taskToExecute, CancellationToken cancellationToken = default)
     {
-        ArgumentNullException.ThrowIfNull(taskToExecute);
         var retryCount = 0;
         while (true)
             try
