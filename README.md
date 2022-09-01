@@ -1,5 +1,7 @@
 [![Code coverage tests](https://github.com/tluijken/task-endurer/actions/workflows/CODE_COVERAGE_TESTS.yml/badge.svg)](https://github.com/tluijken/task-endurer/actions/workflows/CODE_COVERAGE_TESTS.yml)
+[![Publish Packages](https://github.com/tluijken/task-endurer/actions/workflows/PUBLISH_PACKAGES.yml/badge.svg)](https://github.com/tluijken/task-endurer/actions/workflows/PUBLISH_PACKAGES.yml)
 [![codecov](https://codecov.io/gh/tluijken/task-endurer/branch/main/graph/badge.svg)](https://app.codecov.io/gh/tluijken/task-endurer)
+[![NuGet version (TaskEndurer)](https://img.shields.io/nuget/v/TaskEndurer.svg?style=flat-square)](https://www.nuget.org/packages/TaskEndurer/)
 
 ## Summary
 
