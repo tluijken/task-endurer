@@ -34,7 +34,7 @@ public class ExecutorStepDefinitions
     }
 
     [When(@"the executor is called")]
-    public async Task ThenTheExecutorShouldThrowAnException()
+    public async Task WhenTheExecutorIsCalled()
     {
         var scenarioContext = _serviceProvider.GetRequiredService<ScenarioContext>();
         var executor = scenarioContext.Get<IRetryExecutor>(Constants.RetryExecutorKey);
