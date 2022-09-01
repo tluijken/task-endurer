@@ -1,0 +1,35 @@
+name: Code coverage tests
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - '**/*.cs'
+      - '.github/workflows/CODE_COVERAGE_TESTS.yml'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - '**/*.cs'
+      - '.github/workflows/CODE_COVERAGE_TESTS.yml'
+
+env:
+  target_branch: "${{ github.event_name == 'pull_request' && github.head_ref || github.ref_name }}"
+  
+jobs:
+  generate_code_coverage_reports:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        name: Checkout repository
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 6.0.x
+      - name: Restore dependencies
+        run: dotnet restore
+      - name: Build
+        run: dotnet build --no-restore /p:ContinuousIntegrationBuild=true
+      - name: Test
+        run: dotnet test --no-build --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+      - name: Codecov
+        uses: codecov/codecov-action@v1
