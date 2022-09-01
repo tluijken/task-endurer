@@ -1,7 +1,7 @@
 Feature: RetryFeature
 Testing various retry policies
 
-    @retry
+    @retryPolicy
     Scenario: Retry a task a for a maximum amount of retries unsuccessfully
         Given We have a retry policy that state the maximum number of retries is 3
         When We execute a task that always fails

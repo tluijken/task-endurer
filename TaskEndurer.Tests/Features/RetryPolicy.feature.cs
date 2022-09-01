@@ -28,7 +28,7 @@ namespace TaskEndurer.Tests.Features
         
         private Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
-#line 1 "RetryFeatures.feature"
+#line 1 "RetryPolicy.feature"
 #line hidden
         
         public RetryFeatureFeature(RetryFeatureFeature.FixtureData fixtureData, TaskEndurer_Tests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
@@ -83,11 +83,11 @@ namespace TaskEndurer.Tests.Features
         [Xunit.SkippableFactAttribute(DisplayName="Retry a task a for a maximum amount of retries unsuccessfully")]
         [Xunit.TraitAttribute("FeatureTitle", "RetryFeature")]
         [Xunit.TraitAttribute("Description", "Retry a task a for a maximum amount of retries unsuccessfully")]
-        [Xunit.TraitAttribute("Category", "retry")]
+        [Xunit.TraitAttribute("Category", "retryPolicy")]
         public void RetryATaskAForAMaximumAmountOfRetriesUnsuccessfully()
         {
             string[] tagsOfScenario = new string[] {
-                    "retry"};
+                    "retryPolicy"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Retry a task a for a maximum amount of retries unsuccessfully", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 5

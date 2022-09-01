@@ -9,12 +9,6 @@ namespace TaskEndurer.Tests.StepDefinitions;
 [Binding]
 public class RetryStepDefinitions
 {
-    private const string MaxFailCountKey = "maxRetryCount";
-    private const string RetryCountKey = "retryCount";
-    private const string RetryExecutorKey = "retryExecutor";
-    private const string RetryExceptionKey = "retryException";
-    private const string TaskResultKey = "taskResult";
-    private static readonly TimeSpan DefaultRetryInterval = TimeSpan.FromMilliseconds(100);
     private readonly IServiceProvider _serviceProvider;
 
     public RetryStepDefinitions(IServiceProvider serviceProvider)
@@ -26,35 +20,35 @@ public class RetryStepDefinitions
     public async Task WhenWeExecuteATaskThatAlwaysFails()
     {
         var scenarioContext = _serviceProvider.GetRequiredService<ScenarioContext>();
-        var executor = scenarioContext.Get<IRetryExecutor>(RetryExecutorKey);
+        var executor = scenarioContext.Get<IRetryExecutor>(Constants.RetryExecutorKey);
         try
         {
             var result = await executor.ExecuteAsync(AlwaysFails).ConfigureAwait(false);
-            scenarioContext.Set(result, TaskResultKey);
+            scenarioContext.Set(result, Constants.TaskResultKey);
         }
         catch (Exception e)
         {
-            scenarioContext.Set(e, RetryExceptionKey);
+            scenarioContext.Set(e, Constants.RetryExceptionKey);
         }
     }
 
 
     private static async Task<bool> AlwaysFails()
     {
-        await Task.Delay(DefaultRetryInterval);
+        await Task.Delay(Constants.DefaultRetryInterval);
         throw new ApplicationException("Always fails");
     }
 
     private async Task<bool> FailsWithinAllowedRetries()
     {
-        await Task.Delay(DefaultRetryInterval);
+        await Task.Delay(Constants.DefaultRetryInterval);
         var scenarioContext = _serviceProvider.GetRequiredService<ScenarioContext>();
-        var retryCount = scenarioContext.ContainsKey(RetryCountKey) ? scenarioContext.Get<int>(RetryCountKey) : 0;
+        var retryCount = scenarioContext.ContainsKey(Constants.RetryCountKey) ? scenarioContext.Get<int>(Constants.RetryCountKey) : 0;
 
-        var maxFailCount = scenarioContext.Get<int>(MaxFailCountKey);
+        var maxFailCount = scenarioContext.Get<int>(Constants.MaxFailCountKey);
         if (retryCount >= maxFailCount) return true;
 
-        scenarioContext.Set(retryCount + 1, RetryCountKey);
+        scenarioContext.Set(retryCount + 1, Constants.RetryCountKey);
         throw new ApplicationException($"Should fail within allowed retries ({maxFailCount})");
     }
 
@@ -62,16 +56,16 @@ public class RetryStepDefinitions
     public async Task WhenWeExecuteATaskThatFailsTimes(int maxFailCount)
     {
         var scenarioContext = _serviceProvider.GetRequiredService<ScenarioContext>();
-        scenarioContext.Set(maxFailCount, MaxFailCountKey);
-        var executor = scenarioContext.Get<IRetryExecutor>(RetryExecutorKey);
+        scenarioContext.Set(maxFailCount, Constants.MaxFailCountKey);
+        var executor = scenarioContext.Get<IRetryExecutor>(Constants.RetryExecutorKey);
         try
         {
             var result = await executor.ExecuteAsync(FailsWithinAllowedRetries).ConfigureAwait(false);
-            scenarioContext.Set(result, TaskResultKey);
+            scenarioContext.Set(result, Constants.TaskResultKey);
         }
         catch (Exception e)
         {
-            scenarioContext.Set(e, RetryExceptionKey);
+            scenarioContext.Set(e, Constants.RetryExceptionKey);
         }
     }
 
@@ -83,7 +77,7 @@ public class RetryStepDefinitions
             .ContinueOnException<ApplicationException>(true)
             .Build();
 
-        scenarioContext.Set(retryExecutor, RetryExecutorKey);
+        scenarioContext.Set(retryExecutor, Constants.RetryExecutorKey);
     }
 
     [Given(@"We have a retry policy with graceful exception handling that state the maximum number of retries is (.*)")]
@@ -95,14 +89,14 @@ public class RetryStepDefinitions
             .WithGracefulExceptionHandling()
             .Build();
 
-        scenarioContext.Set(retryExecutor, RetryExecutorKey);
+        scenarioContext.Set(retryExecutor, Constants.RetryExecutorKey);
     }
 
     [Then(@"the task should fail")]
     public void ThenTheTaskShouldFail()
     {
         var scenarioContext = _serviceProvider.GetRequiredService<ScenarioContext>();
-        var exception = scenarioContext.Get<Exception>(RetryExceptionKey);
+        var exception = scenarioContext.Get<Exception>(Constants.RetryExceptionKey);
         Assert.NotNull(exception);
     }
 
@@ -110,7 +104,7 @@ public class RetryStepDefinitions
     public void ThenTheTaskShouldNotFail()
     {
         var scenarioContext = _serviceProvider.GetRequiredService<ScenarioContext>();
-        Assert.False(scenarioContext.ContainsKey(RetryExceptionKey));
+        Assert.False(scenarioContext.ContainsKey(Constants.RetryExceptionKey));
     }
 
     [Given(@"We have a retry policy that state the maximum duration is (.*) seconds")]
@@ -121,6 +115,6 @@ public class RetryStepDefinitions
             .ContinueOnException<ApplicationException>(true)
             .Build();
 
-        scenarioContext.Set(retryExecutor, RetryExecutorKey);
+        scenarioContext.Set(retryExecutor, Constants.RetryExecutorKey);
     }
 }
