@@ -4,9 +4,8 @@
         <TargetFramework>net6.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <Version>0.1.0</Version>
-        <AssemblyVersion>0.1.0</AssemblyVersion>
-        <description>Task Endurer is a library that lets you easily retry asynchronous tasks based on a given policy.</description>
+        <Version>0.1.1</Version>
+        <AssemblyVersion>0.1.1</AssemblyVersion>
     </PropertyGroup>
 
     <ItemGroup>
