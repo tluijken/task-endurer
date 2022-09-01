@@ -34,4 +34,19 @@ public class FibonacciStepDefinitions
             scenarioContext.Set(value, i.ToString());
         }
     }
+
+    [Given(@"We retrieve a fibonacci number at a negative index")]
+    public void GivenWeRetrieveAFibonacciNumberAtANegativeIndex()
+    {
+        try
+        {
+            Fibonacci.CalculateNumberAtIndex(-1);
+        }
+        catch (ArgumentOutOfRangeException e)
+        {
+            var scenarioContext = _serviceProvider.GetRequiredService<ScenarioContext>();
+            scenarioContext.Set(e, Constants.RetryExceptionKey);
+        }
+        
+    }
 }

@@ -81,18 +81,18 @@ namespace TaskEndurer.Tests.Features
         }
         
         [Xunit.SkippableFactAttribute(DisplayName="Validate that the UntilExpiredRetryExecutor cannot run when no maximum duration i" +
-            "s set in the retry policy.")]
+            "s set in the retry policy when running a task with a result.")]
         [Xunit.TraitAttribute("FeatureTitle", "Executor feature")]
         [Xunit.TraitAttribute("Description", "Validate that the UntilExpiredRetryExecutor cannot run when no maximum duration i" +
-            "s set in the retry policy.")]
+            "s set in the retry policy when running a task with a result.")]
         [Xunit.TraitAttribute("Category", "Executor")]
-        public void ValidateThatTheUntilExpiredRetryExecutorCannotRunWhenNoMaximumDurationIsSetInTheRetryPolicy_()
+        public void ValidateThatTheUntilExpiredRetryExecutorCannotRunWhenNoMaximumDurationIsSetInTheRetryPolicyWhenRunningATaskWithAResult_()
         {
             string[] tagsOfScenario = new string[] {
                     "Executor"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Validate that the UntilExpiredRetryExecutor cannot run when no maximum duration i" +
-                    "s set in the retry policy.", null, tagsOfScenario, argumentsOfScenario, featureTags);
+                    "s set in the retry policy when running a task with a result.", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 5
     this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -110,9 +110,48 @@ namespace TaskEndurer.Tests.Features
         testRunner.And("We want to use a UntilExpiredRetryExecutor", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 8
-        testRunner.When("the executor is called", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+        testRunner.When("the executor is called with a task that has a result", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 9
+        testRunner.Then("the task should fail", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="Validate that the UntilExpiredRetryExecutor cannot run when no maximum duration i" +
+            "s set in the retry policy when running a task without a result.")]
+        [Xunit.TraitAttribute("FeatureTitle", "Executor feature")]
+        [Xunit.TraitAttribute("Description", "Validate that the UntilExpiredRetryExecutor cannot run when no maximum duration i" +
+            "s set in the retry policy when running a task without a result.")]
+        [Xunit.TraitAttribute("Category", "Executor")]
+        public void ValidateThatTheUntilExpiredRetryExecutorCannotRunWhenNoMaximumDurationIsSetInTheRetryPolicyWhenRunningATaskWithoutAResult_()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "Executor"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Validate that the UntilExpiredRetryExecutor cannot run when no maximum duration i" +
+                    "s set in the retry policy when running a task without a result.", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 12
+    this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 13
+        testRunner.Given("we have no maximum duration set for our retry policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 14
+        testRunner.And("We want to use a UntilExpiredRetryExecutor", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 15
+        testRunner.When("the executor is called with a task that has no result", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 16
         testRunner.Then("the task should fail", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }

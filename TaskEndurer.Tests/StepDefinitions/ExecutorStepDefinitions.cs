@@ -33,14 +33,29 @@ public class ExecutorStepDefinitions
         scenarioContext.Set(retryPolicy, Constants.RetryPolicyKey);
     }
 
-    [When(@"the executor is called")]
-    public async Task WhenTheExecutorIsCalled()
+    [When(@"the executor is called with a task that has no result")]
+    public async Task WhenTheExecutorIsCalledWithATaskThatHasNoResult()
     {
         var scenarioContext = _serviceProvider.GetRequiredService<ScenarioContext>();
         var executor = scenarioContext.Get<IRetryExecutor>(Constants.RetryExecutorKey);
         try
         {
             await executor.ExecuteAsync(() => Task.CompletedTask).ConfigureAwait(false);
+        }
+        catch (NotSupportedException e)
+        {
+            scenarioContext.Set(e, Constants.RetryExceptionKey);
+        }
+    }
+    
+    [When(@"the executor is called with a task that has a result")]
+    public async Task WhenTheExecutorIsCalledWithATaskThatHasAResult()
+    {
+        var scenarioContext = _serviceProvider.GetRequiredService<ScenarioContext>();
+        var executor = scenarioContext.Get<IRetryExecutor>(Constants.RetryExecutorKey);
+        try
+        {
+            await executor.ExecuteAsync(() => Task.FromResult(true)).ConfigureAwait(false);
         }
         catch (NotSupportedException e)
         {
