@@ -37,6 +37,38 @@ internal sealed class UntilExpiredRetryExecutor : IRetryExecutor
         return await _decorated.ExecuteAsync(taskToExecute, cancellationTokenSource.Token).ConfigureAwait(false);
     }
 
+    public async Task ExecuteAsync(Func<Action> actionToExecute, CancellationToken cancellationToken = default)
+    {
+        if (!_retryPolicy.MaxDuration.HasValue)
+        {
+            throw new NotSupportedException(
+                "The maximum duration is not set and cannot be used with an executor that waits until the timespan is expired.");
+        }
+
+        using var maximumWaitCancellationToken = new CancellationTokenSource(_retryPolicy.MaxDuration.Value);
+        using var cancellationTokenSource =
+            CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, maximumWaitCancellationToken.Token);
+
+        // Execute the task.
+        await _decorated.ExecuteAsync(actionToExecute, cancellationTokenSource.Token).ConfigureAwait(false);
+    }
+
+    public async Task<T> ExecuteAsync<T>(Func<T> actionToExecute, CancellationToken cancellationToken = default)
+    {
+        if (!_retryPolicy.MaxDuration.HasValue)
+        {
+            throw new NotSupportedException(
+                "The maximum duration is not set and cannot be used with an executor that waits until the timespan is expired.");
+        }
+
+        using var maximumWaitCancellationToken = new CancellationTokenSource(_retryPolicy.MaxDuration.Value);
+        using var cancellationTokenSource =
+            CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, maximumWaitCancellationToken.Token);
+
+        // Execute the task.
+        return await _decorated.ExecuteAsync(actionToExecute, cancellationTokenSource.Token).ConfigureAwait(false);
+    }
+
 
     /// <summary>
     ///     Retries the specified operation, as long as the retry policy allows it.
@@ -47,12 +79,13 @@ internal sealed class UntilExpiredRetryExecutor : IRetryExecutor
     public async Task ExecuteAsync(Func<Task> taskToExecute, CancellationToken cancellationToken = default)
     {
         if (!_retryPolicy.MaxDuration.HasValue)
+        {
             throw new NotSupportedException(
                 "The maximum duration is not set and cannot be used with an executor that waits until the timespan is expired.");
+        }
 
         using var maximumWaitCancellationToken = new CancellationTokenSource(_retryPolicy.MaxDuration.Value);
-        using var cancellationTokenSource =
-            CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, maximumWaitCancellationToken.Token);
+        using var cancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, maximumWaitCancellationToken.Token);
         // Execute the task.
         await _decorated.ExecuteAsync(taskToExecute, cancellationTokenSource.Token).ConfigureAwait(false);
     }

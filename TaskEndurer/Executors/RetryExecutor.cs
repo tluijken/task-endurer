@@ -30,6 +30,7 @@ internal sealed class RetryExecutor : IRetryExecutor
     {
         var retryCount = 0;
         while (true)
+        {
             try
             {
                 return await taskToExecute().WaitAsync(cancellationToken).ConfigureAwait(false);
@@ -53,6 +54,71 @@ internal sealed class RetryExecutor : IRetryExecutor
                             $"{nextAction} is a unknown {nameof(RetryAction)} value.");
                 }
             }
+        }
+    }
+
+    public async Task ExecuteAsync(Func<Action> actionToExecute, CancellationToken cancellationToken = default)
+    {
+        var retryCount = 0;
+        while (true)
+        {
+            try
+            {
+                actionToExecute();
+                break;
+            }
+            catch (Exception ex)
+            {
+                var nextAction = DetermineNextAction(ex, retryCount);
+                switch (nextAction)
+                {
+                    case RetryAction.ThrowException: throw;
+                    case RetryAction.Retry:
+                        retryCount++;
+                        // Try to sleep for the calculated duration,
+                        await Task.Delay(DetermineDelayUntilNextIteration(retryCount), cancellationToken)
+                            .ConfigureAwait(false);
+                        break;
+                    case RetryAction.GracefulExit:
+                        return;
+                    default:
+                        throw new ArgumentOutOfRangeException(
+                            $"{nextAction} is a unknown {nameof(RetryAction)} value.");
+                }
+            }
+        }
+    }
+
+    public async Task<T> ExecuteAsync<T>(Func<T> actionToExecute, CancellationToken cancellationToken = default)
+    {
+        var retryCount = 0;
+        while (true)
+        {
+            try
+            {
+                var result = actionToExecute();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                var nextAction = DetermineNextAction(ex, retryCount);
+                switch (nextAction)
+                {
+                    case RetryAction.ThrowException: throw;
+                    case RetryAction.Retry:
+                        retryCount++;
+                        // Try to sleep for the calculated duration,
+                        await Task.Delay(DetermineDelayUntilNextIteration(retryCount), cancellationToken)
+                            .ConfigureAwait(false);
+                        break;
+                    case RetryAction.GracefulExit:
+                        return default!;
+                    default:
+                        throw new ArgumentOutOfRangeException(
+                            $"{nextAction} is a unknown {nameof(RetryAction)} value.");
+                }
+            }
+        }
     }
 
     /// <summary>
