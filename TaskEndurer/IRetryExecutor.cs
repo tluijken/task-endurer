@@ -24,7 +24,7 @@ public interface IRetryExecutor
     /// <param name="actionToExecute">The action to execute.</param>
     /// <param name="cancellationToken">A cancellation token used to cancel the work.</param>
     /// <returns>An awaitable task.</returns>
-    Task ExecuteAsync(Func<Action> actionToExecute, CancellationToken cancellationToken = default);
+    Task ExecuteAsync(Action actionToExecute, CancellationToken cancellationToken = default);
     
     /// <summary>
     ///     Retries the specified operation, as long as the retry policy allows it.

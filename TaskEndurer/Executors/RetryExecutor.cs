@@ -57,7 +57,7 @@ internal sealed class RetryExecutor : IRetryExecutor
         }
     }
 
-    public async Task ExecuteAsync(Func<Action> actionToExecute, CancellationToken cancellationToken = default)
+    public async Task ExecuteAsync(Action actionToExecute, CancellationToken cancellationToken = default)
     {
         var retryCount = 0;
         while (true)

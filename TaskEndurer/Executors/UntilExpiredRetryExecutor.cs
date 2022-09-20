@@ -37,7 +37,7 @@ internal sealed class UntilExpiredRetryExecutor : IRetryExecutor
         return await _decorated.ExecuteAsync(taskToExecute, cancellationTokenSource.Token).ConfigureAwait(false);
     }
 
-    public async Task ExecuteAsync(Func<Action> actionToExecute, CancellationToken cancellationToken = default)
+    public async Task ExecuteAsync(Action actionToExecute, CancellationToken cancellationToken = default)
     {
         if (!_retryPolicy.MaxDuration.HasValue)
         {
