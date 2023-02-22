@@ -156,3 +156,19 @@ Testing various retry policies
         And we build the retry policy
         When We execute an action that fails 2 times
         Then the task should not fail
+        
+    Scenario: Retry a function with a result a for a maximum duration successfully
+        Given We construct a retry policy
+        And the maximum retry duration is 3 seconds
+        And the retry policy expects ApplicationExceptions to be thrown
+        And we build the retry policy
+        When We execute a function with a result that fails 2 times
+        Then result should be set to true
+        
+    Scenario: Retry an action a for a maximum duration successfully
+        Given We construct a retry policy
+        And the maximum retry duration is 3 seconds
+        And the retry policy expects ApplicationExceptions to be thrown
+        And we build the retry policy
+        When We execute an action that fails 2 times
+        Then the task should not fail
