@@ -11,7 +11,8 @@
         <PackageProjectUrl>https://github.com/tluijken/task-endurer</PackageProjectUrl>
         <PackageIcon>icon.png</PackageIcon>
         <PackageTags>retry utility task async backoff</PackageTags>
-        <PackageReleaseNotes>Added package meta data</PackageReleaseNotes>
+        <PackageReleaseNotes>Added exception callback handlers</PackageReleaseNotes>
+        <PackageReadmeFile>../README.md</PackageReadmeFile>
     </PropertyGroup>
 
     <ItemGroup>
@@ -21,10 +22,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Update="icon.png">
-        <Pack>True</Pack>
-        <PackagePath></PackagePath>
-      </None>
+        <None Include="../README.md" Pack="true" PackagePath="\"/>
+        <None Update="icon.png" Pack="true" PackagePath="\"/>
     </ItemGroup>
 
 </Project>
