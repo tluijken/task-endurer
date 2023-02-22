@@ -48,3 +48,11 @@ Testing various retry policies
         Then the task should not fail
         When We execute a task that always fails
         Then the task should not fail
+        
+    Scenario: Retry a task for a maximum of 3 times with a 1 second delay which increments a counter on each occurence of the expected exception
+        Given We have construct a retry policy that states the maximum number of retries is 3
+        And the retry policy has a delay of 1 second
+        And a callback is registered to increment a counter on each occurence of the expected exception
+        And we build the retry policy
+        When We execute a task that always fails
+        Then the increment counter should be 3

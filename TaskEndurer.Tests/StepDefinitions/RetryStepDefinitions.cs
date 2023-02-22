@@ -38,7 +38,7 @@ public class RetryStepDefinitions
         await Task.Delay(Constants.DefaultRetryInterval);
         throw new ApplicationException("Always fails");
     }
-    
+
     private static async Task AlwaysFailsNoResult()
     {
         await Task.Delay(Constants.DefaultRetryInterval);
@@ -49,7 +49,9 @@ public class RetryStepDefinitions
     {
         await Task.Delay(Constants.DefaultRetryInterval);
         var scenarioContext = _serviceProvider.GetRequiredService<ScenarioContext>();
-        var retryCount = scenarioContext.ContainsKey(Constants.RetryCountKey) ? scenarioContext.Get<int>(Constants.RetryCountKey) : 0;
+        var retryCount = scenarioContext.ContainsKey(Constants.RetryCountKey)
+            ? scenarioContext.Get<int>(Constants.RetryCountKey)
+            : 0;
 
         var maxFailCount = scenarioContext.Get<int>(Constants.MaxFailCountKey);
         if (retryCount >= maxFailCount) return true;
@@ -62,7 +64,9 @@ public class RetryStepDefinitions
     {
         await Task.Delay(Constants.DefaultRetryInterval);
         var scenarioContext = _serviceProvider.GetRequiredService<ScenarioContext>();
-        var retryCount = scenarioContext.ContainsKey(Constants.RetryCountKey) ? scenarioContext.Get<int>(Constants.RetryCountKey) : 0;
+        var retryCount = scenarioContext.ContainsKey(Constants.RetryCountKey)
+            ? scenarioContext.Get<int>(Constants.RetryCountKey)
+            : 0;
 
         var maxFailCount = scenarioContext.Get<int>(Constants.MaxFailCountKey);
         if (retryCount >= maxFailCount) return;
@@ -70,7 +74,7 @@ public class RetryStepDefinitions
         scenarioContext.Set(retryCount + 1, Constants.RetryCountKey);
         throw new ApplicationException($"Should fail within allowed retries ({maxFailCount})");
     }
-    
+
     [When(@"We execute a task that fails (.*) times")]
     public async Task WhenWeExecuteATaskThatFailsTimes(int maxFailCount)
     {
@@ -93,8 +97,7 @@ public class RetryStepDefinitions
     {
         var scenarioContext = _serviceProvider.GetRequiredService<ScenarioContext>();
         var retryExecutor = RetryPolicyBuilder.Create().WithMaxRetries(numberOrRetries)
-            .ContinueOnException<ApplicationException>(true)
-            .Build();
+            .WithExpectedException<ApplicationException>();
 
         scenarioContext.Set(retryExecutor, Constants.RetryExecutorKey);
     }
@@ -104,7 +107,7 @@ public class RetryStepDefinitions
     {
         var scenarioContext = _serviceProvider.GetRequiredService<ScenarioContext>();
         var retryExecutor = RetryPolicyBuilder.Create().WithMaxRetries(numberOrRetries)
-            .ContinueOnException<ApplicationException>(true)
+            .WithExpectedException<ApplicationException>()
             .WithGracefulExceptionHandling()
             .Build();
 
@@ -131,7 +134,7 @@ public class RetryStepDefinitions
     {
         var scenarioContext = _serviceProvider.GetRequiredService<ScenarioContext>();
         var retryExecutor = RetryPolicyBuilder.Create().WithMaxDuration(TimeSpan.FromSeconds(maximumDurationInSeconds))
-            .ContinueOnException<ApplicationException>(true)
+            .WithExpectedException<ApplicationException>()
             .Build();
 
         scenarioContext.Set(retryExecutor, Constants.RetryExecutorKey);
@@ -166,5 +169,54 @@ public class RetryStepDefinitions
         {
             scenarioContext.Set(e, Constants.RetryExceptionKey);
         }
+    }
+
+    [Given(@"We have construct a retry policy that states the maximum number of retries is (.*)")]
+    public void GivenWeHaveConstructARetryPolicyThatStatesTheMaximumNumberOfRetriesIs(int numberOrRetries)
+    {
+        var scenarioContext = _serviceProvider.GetRequiredService<ScenarioContext>();
+        var retryPolicyBuilder =
+            RetryPolicyBuilder.Create().WithMaxRetries(numberOrRetries).WithGracefulExceptionHandling();
+
+        scenarioContext.Set(retryPolicyBuilder, Constants.RetryPolicyBuilderKey);
+    }
+
+    [Given(@"the retry policy has a delay of (.*) second")]
+    public void GivenTheRetryPolicyHasADelayOfSecond(int delayInSeconds)
+    {
+        var scenarioContext = _serviceProvider.GetRequiredService<ScenarioContext>();
+        var retryPolicyBuilder = scenarioContext.Get<RetryPolicyBuilder>(Constants.RetryPolicyBuilderKey);
+        retryPolicyBuilder.WithDelay(TimeSpan.FromSeconds(delayInSeconds));
+    }
+
+    [Given(@"a callback is registered to increment a counter on each occurence of the expected exception")]
+    public void GivenACallbackIsRegisteredToIncrementACounterOnEachOccurenceOfTheExpectedException()
+    {
+        var scenarioContext = _serviceProvider.GetRequiredService<ScenarioContext>();
+        var retryPolicyBuilder = scenarioContext.Get<RetryPolicyBuilder>(Constants.RetryPolicyBuilderKey);
+        retryPolicyBuilder.WithExceptionHandling<ApplicationException>(_ =>
+        {
+            var retryCountValue = scenarioContext.ContainsKey(Constants.IncrementalResultKey)
+                ? scenarioContext.Get<int>(Constants.IncrementalResultKey)
+                : 0;
+            scenarioContext.Set(retryCountValue + 1, Constants.IncrementalResultKey);
+        });
+    }
+
+    [Then(@"the increment counter should be (.*)")]
+    public void ThenTheIncrementCounterShouldBe(int expectedIncrementCount)
+    {
+        var scenarioContext = _serviceProvider.GetRequiredService<ScenarioContext>();
+        var retryCountValue = scenarioContext.Get<int>(Constants.IncrementalResultKey);
+        Assert.Equal(expectedIncrementCount, retryCountValue);
+    }
+
+    [Given(@"we build the retry policy")]
+    public void GivenWeBuildTheRetryPolicy()
+    {
+        var scenarioContext = _serviceProvider.GetRequiredService<ScenarioContext>();
+        var retryPolicyBuilder = scenarioContext.Get<RetryPolicyBuilder>(Constants.RetryPolicyBuilderKey);
+        var retryExecutor = retryPolicyBuilder.Build();
+        scenarioContext.Set(retryExecutor, Constants.RetryExecutorKey);
     }
 }

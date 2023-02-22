@@ -68,6 +68,37 @@ public interface IRetryPolicyBuilder
     IRetryPolicyBuilder ContinueOnException<TException>(bool retryOnException) where TException : Exception;
 
     /// <summary>
+    ///     Specifies if the retry policy should retry whenever the <typeparamref name="TException" /> occurs.
+    /// </summary>
+    /// <remarks>
+    ///     This means that unexpected exceptions will not be caught and will be thrown.
+    /// </remarks>
+    /// <typeparam name="TException">
+    ///     The exception type to retry on.
+    /// </typeparam>
+    /// <returns>
+    ///     An instance of <see cref="IRetryPolicyBuilder" />.
+    /// </returns>
+    IRetryPolicyBuilder WithExpectedException<TException>() where TException : Exception;
+
+    /// <summary>
+    ///     Registers a callback that will be invoked whenever the <typeparamref name="TException" /> occurs.
+    /// </summary>
+    /// <remarks>
+    ///     Typically useful for additional logging or other side effects.
+    /// </remarks>
+    /// <param name="exceptionCallback">
+    ///     The callback to invoke.
+    /// </param>
+    /// <typeparam name="TException">
+    ///     The exception type to register the callback for.
+    /// </typeparam>
+    /// <returns>
+    ///     An instance of <see cref="IRetryPolicyBuilder" />.
+    /// </returns>
+    IRetryPolicyBuilder WithExceptionHandling<TException>(Action<TException> exceptionCallback) where TException : Exception;
+    
+    /// <summary>
     ///     Builds the retry policy and returns an executor that can be used to execute the action.
     /// </summary>
     /// <returns>an <see cref="IRetryExecutor" /> that can be used to execute the action</returns>

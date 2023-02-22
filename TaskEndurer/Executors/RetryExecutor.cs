@@ -57,6 +57,18 @@ internal sealed class RetryExecutor : IRetryExecutor
         }
     }
 
+    /// <summary>
+    ///     Retries the specified operation, as long as the retry policy allows it.
+    /// </summary>
+    /// <param name="actionToExecute">
+    ///     The action to execute.
+    /// </param>
+    /// <param name="cancellationToken">
+    ///     A cancellation token used to cancel the work.
+    /// </param>
+    /// <exception cref="ArgumentOutOfRangeException">
+    ///     Thrown when the <see cref="RetryAction" /> is not supported.
+    /// </exception>
     public async Task ExecuteAsync(Action actionToExecute, CancellationToken cancellationToken = default)
     {
         var retryCount = 0;
@@ -89,6 +101,24 @@ internal sealed class RetryExecutor : IRetryExecutor
         }
     }
 
+    /// <summary>
+    ///     Retries the specified operation, as long as the retry policy allows it.
+    /// </summary>
+    /// <param name="actionToExecute">
+    ///     The action to execute.
+    /// </param>
+    /// <param name="cancellationToken">
+    ///     A cancellation token used to cancel the work.
+    /// </param>
+    /// <typeparam name="T">
+    ///     The type of the result.
+    /// </typeparam>
+    /// <returns>
+    ///    The result of the operation.
+    /// </returns>
+    /// <exception cref="ArgumentOutOfRangeException">
+    ///    Thrown when the <see cref="RetryAction" /> is not supported.
+    /// </exception>
     public async Task<T> ExecuteAsync<T>(Func<T> actionToExecute, CancellationToken cancellationToken = default)
     {
         var retryCount = 0;
@@ -157,6 +187,18 @@ internal sealed class RetryExecutor : IRetryExecutor
             }
     }
 
+    /// <summary>
+    ///     Determines the next action to take based on the exception and the retry count.
+    /// </summary>
+    /// <param name="ex">
+    ///     The exception that was thrown during the execution.
+    /// </param>
+    /// <param name="retryCount">
+    ///    The current retry count.
+    /// </param>
+    /// <returns>
+    ///     The next action to take.
+    /// </returns>
     private RetryAction DetermineNextAction(Exception ex, int retryCount)
     {
         // throw if there are no corresponding callbacks (or) reached max retries.
@@ -165,7 +207,7 @@ internal sealed class RetryExecutor : IRetryExecutor
             return _retryPolicy.GracefulExceptionHandling ? RetryAction.GracefulExit : RetryAction.ThrowException;
 
         // the return bool value indicates whether to continue with retries or not.
-        var continueExecution = exceptionCallback();
+        var continueExecution = exceptionCallback(ex);
         return continueExecution ? RetryAction.Retry : RetryAction.ThrowException;
     }
 

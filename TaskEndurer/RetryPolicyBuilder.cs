@@ -21,7 +21,9 @@ public sealed class RetryPolicyBuilder : IRetryPolicyBuilder
     /// <summary>
     ///     Specifies that any exceptions should be gracefully handled and not thrown once the retry count has been reached.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>
+    ///     An instance of <see cref="IRetryPolicyBuilder" />.
+    /// </returns>
     public IRetryPolicyBuilder WithGracefulExceptionHandling()
     {
         _retryPolicy.GracefulExceptionHandling = true;
@@ -101,9 +103,10 @@ public sealed class RetryPolicyBuilder : IRetryPolicyBuilder
     /// <returns>
     ///     An instance of <see cref="IRetryPolicyBuilder" />.
     /// </returns>
+    [Obsolete("Use WithExpectedException instead.")]
     public IRetryPolicyBuilder ContinueOnException<TException>(bool retryOnException) where TException : Exception
     {
-        _retryPolicy.RegisterExceptionCallback<TException>(() => retryOnException);
+        _retryPolicy.RegisterExceptionCallback<TException>(_ => retryOnException);
         return this;
     }
 
@@ -114,6 +117,50 @@ public sealed class RetryPolicyBuilder : IRetryPolicyBuilder
     public IRetryExecutor Build()
     {
         return RetryExecutorFactory.Create(_retryPolicy);
+    }
+
+    /// <summary>
+    ///     Specifies if the retry policy should retry whenever the <typeparamref name="TException" /> occurs.
+    /// </summary>
+    /// <remarks>
+    ///     This means that unexpected exceptions will not be caught and will be thrown.
+    /// </remarks>
+    /// <typeparam name="TException">
+    ///     The exception type to retry on.
+    /// </typeparam>
+    /// <returns>
+    ///     An instance of <see cref="IRetryPolicyBuilder" />.
+    /// </returns>
+    public IRetryPolicyBuilder WithExpectedException<TException>() where TException : Exception
+    {
+        _retryPolicy.RegisterExceptionCallback<TException>(_ => true);
+        return this;
+    }
+
+    /// <summary>
+    ///     Registers a callback that will be invoked whenever the <typeparamref name="TException" /> occurs.
+    /// </summary>
+    /// <remarks>
+    ///     Typically useful for additional logging or other side effects.
+    /// </remarks>
+    /// <param name="exceptionCallback">
+    ///     The callback to invoke.
+    /// </param>
+    /// <typeparam name="TException">
+    ///     The exception type to register the callback for.
+    /// </typeparam>
+    /// <returns>
+    ///     An instance of <see cref="IRetryPolicyBuilder" />.
+    /// </returns>
+    public IRetryPolicyBuilder WithExceptionHandling<TException>(Action<TException> exceptionCallback)
+        where TException : Exception
+    {
+        _retryPolicy.RegisterExceptionCallback<TException>(ex =>
+        {
+            exceptionCallback.Invoke((TException)ex);
+            return true;
+        });
+        return this;
     }
 
     /// <summary>

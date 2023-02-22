@@ -368,6 +368,50 @@ namespace TaskEndurer.Tests.Features
             this.ScenarioCleanup();
         }
         
+        [Xunit.SkippableFactAttribute(DisplayName="Retry a task for a maximum of 3 times with a 1 second delay which increments a co" +
+            "unter on each occurence of the expected exception")]
+        [Xunit.TraitAttribute("FeatureTitle", "RetryFeature")]
+        [Xunit.TraitAttribute("Description", "Retry a task for a maximum of 3 times with a 1 second delay which increments a co" +
+            "unter on each occurence of the expected exception")]
+        public void RetryATaskForAMaximumOf3TimesWithA1SecondDelayWhichIncrementsACounterOnEachOccurenceOfTheExpectedException()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Retry a task for a maximum of 3 times with a 1 second delay which increments a co" +
+                    "unter on each occurence of the expected exception", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 52
+    this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 53
+        testRunner.Given("We have construct a retry policy that states the maximum number of retries is 3", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 54
+        testRunner.And("the retry policy has a delay of 1 second", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 55
+        testRunner.And("a callback is registered to increment a counter on each occurence of the expected" +
+                        " exception", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 56
+        testRunner.And("we build the retry policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 57
+        testRunner.When("We execute a task that always fails", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 58
+        testRunner.Then("the increment counter should be 3", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
         [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.9.0.0")]
         [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
         public class FixtureData : System.IDisposable

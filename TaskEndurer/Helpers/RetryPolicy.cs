@@ -21,7 +21,7 @@ internal struct RetryPolicy
     /// </summary>
     /// <param name="callback">The callback to execute whenever an exception of type <typeparamref name="TException" /> occurs.</param>
     /// <typeparam name="TException">The type of exception to handle.</typeparam>
-    internal void RegisterExceptionCallback<TException>(Func<bool> callback) where TException : Exception
+    internal void RegisterExceptionCallback<TException>(Func<Exception, bool> callback) where TException : Exception
     {
         ExceptionCallbacksByType.Add(typeof(TException), callback);
     }
@@ -29,7 +29,7 @@ internal struct RetryPolicy
     /// <summary>
     ///     Registered exception types that should be retried.
     /// </summary>
-    internal Dictionary<Type, Func<bool>> ExceptionCallbacksByType { get; } = new();
+    internal Dictionary<Type, Func<Exception, bool>> ExceptionCallbacksByType { get; } = new();
 
     /// <summary>
     ///     The maximum number of retries.
@@ -50,7 +50,7 @@ internal struct RetryPolicy
     ///     Defines the delay strategy to use between retries.
     /// </summary>
     /// <remarks>
-    ///     Defaults to <see cref="BackoffStrategy.Fixed" />.
+    ///     Defaults to <see cref="TaskEndurer.BackoffStrategy.Fixed" />.
     /// </remarks>
     [SuppressMessage("ReSharper", "AutoPropertyCanBeMadeGetOnly.Global")]
     public BackoffStrategy BackoffStrategy { get; internal set; } = BackoffStrategy.Fixed;
