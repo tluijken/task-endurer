@@ -77,6 +77,14 @@ Testing various retry policies
         When We execute a task that always fails
         Then the task should not fail
         
+    Scenario: Retry a task a for a maximum duration using the legacy exception registration
+        Given We construct a retry policy
+        And the maximum retry duration is 3 seconds
+        And the retry policy registers the the expected exception of type ApplicationException to be thrown using the legacy registration
+        And we build the retry policy
+        When We execute a task that always fails
+        Then the task should fail
+        
     Scenario: Retry a task for a maximum of 3 times with a 1 second delay which increments a counter on each occurence of the expected exception
         Given We construct a retry policy
         And the retry policy has a maximum number of retries of 3

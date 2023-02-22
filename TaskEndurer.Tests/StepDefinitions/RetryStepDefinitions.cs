@@ -243,4 +243,14 @@ public class RetryStepDefinitions
         var duration = endTime - startTime;
         Assert.Equal(expectedMinimumDurationInSeconds, duration.TotalSeconds, 0);
     }
+
+    [Given(@"the retry policy registers the the expected exception of type ApplicationException to be thrown using the legacy registration")]
+    public void GivenTheRetryPolicyRegistersTheTheExpectedExceptionOfTypeApplicationExceptionToBeThrownUsingTheLegacyRegistration()
+    {
+        var scenarioContext = _serviceProvider.GetRequiredService<ScenarioContext>();
+        var retryPolicyBuilder = scenarioContext.Get<RetryPolicyBuilder>(Constants.RetryPolicyBuilderKey);
+#pragma warning disable CS0618 still need to support legacy registration
+        retryPolicyBuilder.ContinueOnException<ApplicationException>(true);
+#pragma warning restore CS0618
+    }
 }
