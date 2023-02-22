@@ -4,10 +4,10 @@
         <TargetFramework>net6.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <Version>0.2.1</Version>
-        <AssemblyVersion>0.2.1</AssemblyVersion>
-        <PackageVersion>0.2.1</PackageVersion>
-        <Description>Task Endurer is a library that lets you easily retry asynchronous tasks based on a given policy.</Description>
+        <Version>0.3.0</Version>
+        <AssemblyVersion>0.3.0</AssemblyVersion>
+        <PackageVersion>0.3.0</PackageVersion>
+        <Description>Task Endurer is a library that lets you easily retry synchronous actions and asynchronous tasks based on a given policy.</Description>
         <PackageProjectUrl>https://github.com/tluijken/task-endurer</PackageProjectUrl>
         <PackageIcon>icon.png</PackageIcon>
         <PackageTags>retry utility task async backoff</PackageTags>

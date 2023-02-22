@@ -8,8 +8,8 @@
     <owners>$author$</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>Added package meta data</releaseNotes>
-    <copyright>Copyright 2022</copyright>
+    <releaseNotes>Added exception callback handlers</releaseNotes>
+    <copyright>Copyright 2023</copyright>
     <tags>retry utility task async backoff</tags>
   </metadata>
 </package>
