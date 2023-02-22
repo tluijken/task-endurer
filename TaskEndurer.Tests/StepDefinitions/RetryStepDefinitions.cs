@@ -249,7 +249,7 @@ public class RetryStepDefinitions
     {
         var scenarioContext = _serviceProvider.GetRequiredService<ScenarioContext>();
         var retryPolicyBuilder = scenarioContext.Get<RetryPolicyBuilder>(Constants.RetryPolicyBuilderKey);
-#pragma warning disable CS0618 still need to support legacy registration
+#pragma warning disable CS0618
         retryPolicyBuilder.ContinueOnException<ApplicationException>(true);
 #pragma warning restore CS0618
     }
