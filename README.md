@@ -49,7 +49,7 @@ executor.ExecuteAsync(async () => await Task.Delay(1000)); // Execute the task u
 | WithMaxDuration               | Specifies the maximum duration to retry.                                                                                                             |
 | WithExpectedException         | Specifies which exception types to expect.                                                                                                           |
 | WithGracefulExceptionHandling | Specifies that any exceptions should be gracefully handled and not thrown after the maximum duration or maximum number of retries have been reached. |
-| WithExceptionCallback         | Registers a callback that will be called when an exception occurs.                                                                                   |
+| WithExceptionCallback         | Registers a callback that will be called when an exception of a specified type occurs.                                                               |
 
 ## Backoff strategies
 | Strategy    | Description                                                                                                                                                   |
