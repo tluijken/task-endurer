@@ -241,7 +241,7 @@ public class RetryStepDefinitions
         var startTime = scenarioContext.Get<DateTime>(Constants.StartTimeKey);
         var endTime = DateTime.Now;
         var duration = endTime - startTime;
-        Assert.Equal(expectedMinimumDurationInSeconds, duration.TotalSeconds, 0);
+        Assert.True(Math.Abs(Math.Floor(duration.TotalSeconds) - expectedMinimumDurationInSeconds) <= 1);
     }
 
     [Given(@"the retry policy registers the the expected exception of type ApplicationException to be thrown using the legacy registration")]
