@@ -14,4 +14,5 @@ internal static class Constants
     internal const string IncrementalResultKey = "incrementalResult";
     internal static readonly TimeSpan DefaultRetryInterval = TimeSpan.FromMilliseconds(100);
     public const string StartTimeKey = "startTime";
+    internal const string RetryResultKey = "retryResult";
 }

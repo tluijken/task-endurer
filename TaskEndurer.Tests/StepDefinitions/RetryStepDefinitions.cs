@@ -253,4 +253,67 @@ public class RetryStepDefinitions
         retryPolicyBuilder.ContinueOnException<ApplicationException>(true);
 #pragma warning restore CS0618
     }
+
+    [When(@"We execute a function with a result that fails (.*) times")]
+    public async Task WhenWeExecuteAFunctionWithAResultThatFailsTimes(int maxFailCount)
+    {
+        var scenarioContext = _serviceProvider.GetRequiredService<ScenarioContext>();
+        scenarioContext.Set(maxFailCount, Constants.MaxFailCountKey);
+        var executor = scenarioContext.Get<IRetryExecutor>(Constants.RetryExecutorKey);
+        try
+        {
+            var result = await executor.ExecuteAsync(() =>
+            {
+                var failCount = scenarioContext.ContainsKey(Constants.RetryCountKey)
+                    ? scenarioContext.Get<int>(Constants.RetryCountKey)
+                    : 0;
+                if (failCount < maxFailCount)
+                {
+                    scenarioContext.Set(failCount + 1, Constants.RetryCountKey);
+                    throw new ApplicationException("This is an expected exception");
+                }
+
+                return true;
+            }).ConfigureAwait(false);
+            scenarioContext.Set(result, Constants.TaskResultKey);
+        }
+        catch (Exception e)
+        {
+            scenarioContext.Set(e, Constants.RetryExceptionKey);
+        }
+    }
+
+    [Then(@"result should be set to (true|false)")]
+    public void ThenResultShouldBeSetToTrue(bool expectedTaskResult)
+    {
+        var scenarioContext = _serviceProvider.GetRequiredService<ScenarioContext>();
+        var result = scenarioContext.Get<bool>(Constants.TaskResultKey);
+        Assert.Equal(expectedTaskResult, result);
+    }
+
+    [When(@"We execute an action that fails (.*) times")]
+    public async Task WhenWeExecuteAnActionThatFailsTimes(int maxFailCount)
+    {
+        var scenarioContext = _serviceProvider.GetRequiredService<ScenarioContext>();
+        scenarioContext.Set(maxFailCount, Constants.MaxFailCountKey);
+        var executor = scenarioContext.Get<IRetryExecutor>(Constants.RetryExecutorKey);
+        try
+        {
+            await executor.ExecuteAsync(() =>
+            {
+                var failCount = scenarioContext.ContainsKey(Constants.RetryCountKey)
+                    ? scenarioContext.Get<int>(Constants.RetryCountKey)
+                    : 0;
+                if (failCount < maxFailCount)
+                {
+                    scenarioContext.Set(failCount + 1, Constants.RetryCountKey);
+                    throw new ApplicationException("This is an expected exception");
+                }
+            }).ConfigureAwait(false);
+        }
+        catch (Exception e)
+        {
+            scenarioContext.Set(e, Constants.RetryExceptionKey);
+        }
+    }
 }
