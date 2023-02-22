@@ -219,12 +219,12 @@ public class RetryStepDefinitions
         retryPolicyBuilder.WithExpectedException<ApplicationException>();
     }
 
-    [Given(@"the retry policy has an exponential backoff policy")]
-    public void GivenTheRetryPolicyHasADefaultExponentialBackoffPolicy()
+    [Given(@"the retry policy has an (linear|exponential|fixed|fibonacci) backoff policy")]
+    public void GivenTheRetryPolicyHasADefaultExponentialBackoffPolicy(BackoffStrategy backoffStrategy)
     {
         var scenarioContext = _serviceProvider.GetRequiredService<ScenarioContext>();
         var retryPolicyBuilder = scenarioContext.Get<RetryPolicyBuilder>(Constants.RetryPolicyBuilderKey);
-        retryPolicyBuilder.WithBackoff(BackoffStrategy.Exponential);
+        retryPolicyBuilder.WithBackoff(backoffStrategy);
     }
 
     [Given(@"we start measuring the time")]
@@ -241,7 +241,7 @@ public class RetryStepDefinitions
         var startTime = scenarioContext.Get<DateTime>(Constants.StartTimeKey);
         var endTime = DateTime.Now;
         var duration = endTime - startTime;
-        Assert.True(Math.Abs(Math.Floor(duration.TotalSeconds) - expectedMinimumDurationInSeconds) <= 1);
+        Assert.True(Math.Abs(Math.Floor(duration.TotalSeconds) - expectedMinimumDurationInSeconds) <= 1, $"The retry duration {duration} was not as expected {expectedMinimumDurationInSeconds}");
     }
 
     [Given(@"the retry policy registers the the expected exception of type ApplicationException to be thrown using the legacy registration")]

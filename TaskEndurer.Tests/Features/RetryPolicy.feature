@@ -94,7 +94,7 @@ Testing various retry policies
         When We execute a task that always fails
         Then the increment counter should be 3
     
-    Scenario: Retry a task with the default exponential backoff policy
+    Scenario: Retry a task with the exponential backoff policy
         Given We construct a retry policy
         And the retry policy has a maximum number of retries of 3
         And the retry policy expects ApplicationExceptions to be thrown
@@ -105,3 +105,38 @@ Testing various retry policies
         When We execute a task that always fails
         # (1x1)1 + (2x2)4 + (3x3)9 = 14 seconds
         Then retry should have taken 14 seconds
+        
+    Scenario: Retry a task with the linear backoff policy
+        Given We construct a retry policy
+        And the retry policy has a maximum number of retries of 3
+        And the retry policy expects ApplicationExceptions to be thrown
+        And the retry policy has an linear backoff policy
+        And the retry policy has a delay of 1 second
+        And we build the retry policy
+        And we start measuring the time
+        When We execute a task that always fails
+        # 1 + 2 + 3 = 5 seconds
+        Then retry should have taken 5 seconds
+        
+    Scenario: Retry a task with the fibonacci backoff policy
+        Given We construct a retry policy
+        And the retry policy has a maximum number of retries of 5
+        And the retry policy expects ApplicationExceptions to be thrown
+        And the retry policy has an fibonacci backoff policy
+        And the retry policy has a delay of 1 second
+        And we build the retry policy
+        And we start measuring the time
+        When We execute a task that always fails
+        # (0 skipped) + 1 + 1 + 2 + 3 + 5 = 12 seconds
+        Then retry should have taken 12 seconds
+        
+    Scenario: Retry a task with the fixed backoff policy
+        Given We construct a retry policy
+        And the retry policy has a maximum number of retries of 5
+        And the retry policy expects ApplicationExceptions to be thrown
+        And the retry policy has an fixed backoff policy
+        And the retry policy has a delay of 1 second
+        And we build the retry policy
+        And we start measuring the time
+        When We execute a task that always fails
+        Then retry should have taken 5 seconds
