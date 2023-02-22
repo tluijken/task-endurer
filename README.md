@@ -41,14 +41,15 @@ var executor = policy.Build(); // Build the executor based on the policy.
 executor.ExecuteAsync(async () => await Task.Delay(1000)); // Execute the task using the executor.
 ```
 ## Policy builder options
-| Option                        | Description                                                                                                                                                   |
-|-------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| WithMaxRetries                | Specified the maximum number of retries before the task will actually fail.                                                                                   |
-| WithDelay                     | Specifies the delay between retries.                                                                                                                          |
-| WithBackoff                   | Specifies the backoff strategy.                                                                                                                               |
-| WithMaxDuration               | Specifies the maximum duration to retry.                                                                                                                      |
-| ContinueOnException           | Register expected exception types, to indicate whether to continue retrying or not after the maximum duration or maximum number of retries have been reached. |
-| WithGracefulExceptionHandling | Specifies that any exceptions should be gracefully handled and not thrown after the maximum duration or maximum number of retries have been reached.          |
+| Option                        | Description                                                                                                                                          |
+|-------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------|
+| WithMaxRetries                | Specified the maximum number of retries before the task will actually fail.                                                                          |
+| WithDelay                     | Specifies the delay between retries.                                                                                                                 |
+| WithBackoff                   | Specifies the backoff strategy.                                                                                                                      |
+| WithMaxDuration               | Specifies the maximum duration to retry.                                                                                                             |
+| WithExpectedException         | Specifies which exception types to expect.                                                                                                           |
+| WithGracefulExceptionHandling | Specifies that any exceptions should be gracefully handled and not thrown after the maximum duration or maximum number of retries have been reached. |
+| WithExceptionCallback         | Registers a callback that will be called when an exception occurs.                                                                                   |
 
 ## Backoff strategies
 | Strategy    | Description                                                                                                                                                   |
