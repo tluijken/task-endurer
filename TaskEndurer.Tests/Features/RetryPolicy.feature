@@ -85,3 +85,15 @@ Testing various retry policies
         And we build the retry policy
         When We execute a task that always fails
         Then the increment counter should be 3
+    
+    Scenario: Retry a task with the default exponential backoff policy
+        Given We construct a retry policy
+        And the retry policy has a maximum number of retries of 3
+        And the retry policy expects ApplicationExceptions to be thrown
+        And the retry policy has an exponential backoff policy
+        And the retry policy has a delay of 1 second
+        And we build the retry policy
+        And we start measuring the time
+        When We execute a task that always fails
+        # (1x1)1 + (2x2)4 + (3x3)9 = 14 seconds
+        Then retry should have taken 14 seconds

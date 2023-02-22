@@ -218,4 +218,29 @@ public class RetryStepDefinitions
         var retryPolicyBuilder = scenarioContext.Get<RetryPolicyBuilder>(Constants.RetryPolicyBuilderKey);
         retryPolicyBuilder.WithExpectedException<ApplicationException>();
     }
+
+    [Given(@"the retry policy has an exponential backoff policy")]
+    public void GivenTheRetryPolicyHasADefaultExponentialBackoffPolicy()
+    {
+        var scenarioContext = _serviceProvider.GetRequiredService<ScenarioContext>();
+        var retryPolicyBuilder = scenarioContext.Get<RetryPolicyBuilder>(Constants.RetryPolicyBuilderKey);
+        retryPolicyBuilder.WithBackoff(BackoffStrategy.Exponential);
+    }
+
+    [Given(@"we start measuring the time")]
+    public void GivenWeStartMeasuringTheTime()
+    {
+        var scenarioContext = _serviceProvider.GetRequiredService<ScenarioContext>();
+        scenarioContext.Set(DateTime.Now, Constants.StartTimeKey);
+    }
+
+    [Then(@"retry should have taken (.*) seconds")]
+    public void ThenRetryShouldHaveTakenAtLeastSeconds(int expectedMinimumDurationInSeconds)
+    {
+        var scenarioContext = _serviceProvider.GetRequiredService<ScenarioContext>();
+        var startTime = scenarioContext.Get<DateTime>(Constants.StartTimeKey);
+        var endTime = DateTime.Now;
+        var duration = endTime - startTime;
+        Assert.Equal(expectedMinimumDurationInSeconds, duration.TotalSeconds, 0);
+    }
 }
