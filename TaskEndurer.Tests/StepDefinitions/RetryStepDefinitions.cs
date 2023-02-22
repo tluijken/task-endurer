@@ -92,27 +92,6 @@ public class RetryStepDefinitions
         }
     }
 
-    [Given(@"We have a retry policy that state the maximum number of retries is (.*)")]
-    public void GivenWeHaveARetryPolicyThatStateTheMaximumNumberOfRetriesIs(int numberOrRetries)
-    {
-        var scenarioContext = _serviceProvider.GetRequiredService<ScenarioContext>();
-        var retryExecutor = RetryPolicyBuilder.Create().WithMaxRetries(numberOrRetries)
-            .WithExpectedException<ApplicationException>();
-
-        scenarioContext.Set(retryExecutor, Constants.RetryExecutorKey);
-    }
-
-    [Given(@"We have a retry policy with graceful exception handling that state the maximum number of retries is (.*)")]
-    public void GivenWeHaveARetryPolicyThatStateTheMaximumNumberOfRetriesIsGracefully(int numberOrRetries)
-    {
-        var scenarioContext = _serviceProvider.GetRequiredService<ScenarioContext>();
-        var retryExecutor = RetryPolicyBuilder.Create().WithMaxRetries(numberOrRetries)
-            .WithExpectedException<ApplicationException>()
-            .WithGracefulExceptionHandling()
-            .Build();
-
-        scenarioContext.Set(retryExecutor, Constants.RetryExecutorKey);
-    }
 
     [Then(@"the task should fail")]
     public void ThenTheTaskShouldFail()
@@ -129,16 +108,6 @@ public class RetryStepDefinitions
         Assert.False(scenarioContext.ContainsKey(Constants.RetryExceptionKey));
     }
 
-    [Given(@"We have a retry policy that state the maximum duration is (.*) seconds")]
-    public void GivenWeHaveARetryPolicyThatStateTheMaximumDurationIsSeconds(int maximumDurationInSeconds)
-    {
-        var scenarioContext = _serviceProvider.GetRequiredService<ScenarioContext>();
-        var retryExecutor = RetryPolicyBuilder.Create().WithMaxDuration(TimeSpan.FromSeconds(maximumDurationInSeconds))
-            .WithExpectedException<ApplicationException>()
-            .Build();
-
-        scenarioContext.Set(retryExecutor, Constants.RetryExecutorKey);
-    }
 
     [When(@"We execute a task without a result that fails (.*) times")]
     public async Task WhenWeExecuteATaskWithoutAResultThatFailsTimes(int maxFailCount)
@@ -171,13 +140,11 @@ public class RetryStepDefinitions
         }
     }
 
-    [Given(@"We have construct a retry policy that states the maximum number of retries is (.*)")]
-    public void GivenWeHaveConstructARetryPolicyThatStatesTheMaximumNumberOfRetriesIs(int numberOrRetries)
+    [Given(@"We construct a retry policy")]
+    public void GivenWeHaveConstructARetryPolicyThatStatesTheMaximumNumberOfRetriesIs()
     {
         var scenarioContext = _serviceProvider.GetRequiredService<ScenarioContext>();
-        var retryPolicyBuilder =
-            RetryPolicyBuilder.Create().WithMaxRetries(numberOrRetries).WithGracefulExceptionHandling();
-
+        var retryPolicyBuilder = RetryPolicyBuilder.Create();
         scenarioContext.Set(retryPolicyBuilder, Constants.RetryPolicyBuilderKey);
     }
 
@@ -218,5 +185,37 @@ public class RetryStepDefinitions
         var retryPolicyBuilder = scenarioContext.Get<RetryPolicyBuilder>(Constants.RetryPolicyBuilderKey);
         var retryExecutor = retryPolicyBuilder.Build();
         scenarioContext.Set(retryExecutor, Constants.RetryExecutorKey);
+    }
+
+    [Given(@"the retry policy has a maximum number of retries of (.*)")]
+    public void GivenTheRetryPolicyHasAMaximumNumberOfRetriesOf(int maximumNumberOfRetries)
+    {
+        var scenarioContext = _serviceProvider.GetRequiredService<ScenarioContext>();
+        var retryPolicyBuilder = scenarioContext.Get<RetryPolicyBuilder>(Constants.RetryPolicyBuilderKey);
+        retryPolicyBuilder.WithMaxRetries(maximumNumberOfRetries);
+    }
+
+    [Given(@"the maximum retry duration is (.*) seconds")]
+    public void GivenTheMaximumRetryDurationIsSeconds(int maximumRetryDurationInSeconds)
+    {
+        var scenarioContext = _serviceProvider.GetRequiredService<ScenarioContext>();
+        var retryPolicyBuilder = scenarioContext.Get<RetryPolicyBuilder>(Constants.RetryPolicyBuilderKey);
+        retryPolicyBuilder.WithMaxDuration(TimeSpan.FromSeconds(maximumRetryDurationInSeconds));
+    }
+
+    [Given(@"we allow graceful exception handling")]
+    public void GivenWeAllowGracefulExceptionHandling()
+    {
+        var scenarioContext = _serviceProvider.GetRequiredService<ScenarioContext>();
+        var retryPolicyBuilder = scenarioContext.Get<RetryPolicyBuilder>(Constants.RetryPolicyBuilderKey);
+        retryPolicyBuilder.WithGracefulExceptionHandling();
+    }
+
+    [Given(@"the retry policy expects ApplicationExceptions to be thrown")]
+    public void GivenTheRetryPolicyExpectsApplicationExceptionsToBeThrown()
+    {
+        var scenarioContext = _serviceProvider.GetRequiredService<ScenarioContext>();
+        var retryPolicyBuilder = scenarioContext.Get<RetryPolicyBuilder>(Constants.RetryPolicyBuilderKey);
+        retryPolicyBuilder.WithExpectedException<ApplicationException>();
     }
 }
