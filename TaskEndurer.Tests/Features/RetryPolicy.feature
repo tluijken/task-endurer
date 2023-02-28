@@ -41,7 +41,23 @@ Testing various retry policies
         And we build the retry policy
         When We execute a task without a result that always fails
         Then the task should fail
+    
+    Scenario: Retry a function a for a maximum amount of retries unsuccessfully
+        Given We construct a retry policy
+        And the retry policy has a maximum number of retries of 3
+        And the retry policy expects ApplicationExceptions to be thrown
+        And we build the retry policy
+        When We execute a function with a result that fails 10 times
+        Then the task should fail
 
+    Scenario: Retry an action a for a maximum amount of retries unsuccessfully
+        Given We construct a retry policy
+        And the retry policy has a maximum number of retries of 3
+        And the retry policy expects ApplicationExceptions to be thrown
+        And we build the retry policy
+        When We execute an action that fails 10 times
+        Then the task should fail
+        
     Scenario: Retry a task without a result a for a maximum amount of retries successfully
         Given We construct a retry policy
         And the retry policy has a maximum number of retries of 3
