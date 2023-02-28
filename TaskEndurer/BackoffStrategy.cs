@@ -9,7 +9,7 @@ namespace TaskEndurer;
 ///     Which is why we need backoff strategies. Basically, a backoff strategy is a technique that we can use to retry
 ///     failing function calls after a given delay - and keep retrying them until either the function call works, or until
 ///     we’ve tried so many times that we just give up and handle the error.
-///     <seealso cref="https://backoff-utils.readthedocs.io"/>
+///     <a href="https://backoff-utils.readthedocs.io">See more detailed information about backoff strategies here</a>
 /// </summary>
 [SuppressMessage("ReSharper", "UnusedMember.Global")]
 public enum BackoffStrategy
