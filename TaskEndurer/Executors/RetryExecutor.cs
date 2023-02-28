@@ -225,12 +225,9 @@ internal sealed class RetryExecutor : IRetryExecutor
             BackoffStrategy.Linear => _retryPolicy.DelayBetweenRetries * retryCount,
             BackoffStrategy.Fixed => _retryPolicy.DelayBetweenRetries,
             BackoffStrategy.Exponential => _retryPolicy.DelayBetweenRetries * (retryCount * retryCount),
-            BackoffStrategy.Fibonacci => _retryPolicy.DelayBetweenRetries *
-                                         Fibonacci.CalculateNumberAtIndex(retryCount),
-            // TODO, implement other strategies.
-            BackoffStrategy.Polynomial => throw new NotImplementedException(),
-            _ => throw new ArgumentOutOfRangeException(
-                $"{_retryPolicy.BackoffStrategy} is not a valid backoff strategy.")
+            BackoffStrategy.Fibonacci => _retryPolicy.DelayBetweenRetries * Fibonacci.CalculateNumberAtIndex(retryCount),
+            BackoffStrategy.Polynomial => _retryPolicy.DelayBetweenRetries * Math.Pow(retryCount, _retryPolicy.PolynomialFactor),
+            _ => throw new ArgumentOutOfRangeException($"{_retryPolicy.BackoffStrategy} is not a valid backoff strategy.")
         };
         return delay;
     }

@@ -162,11 +162,28 @@ public sealed class RetryPolicyBuilder : IRetryPolicyBuilder
         });
         return this;
     }
+    
+    /// <summary>
+    ///     Specifies the factor to use when calculating the delay between retries when using the <see cref="BackoffStrategy.Polynomial" /> strategy.
+    /// </summary>
+    /// <param name="factor">
+    ///     The polynomial factor to use.
+    /// </param>
+    /// <returns>
+    ///     An instance of <see cref="IRetryPolicyBuilder" />.
+    /// </returns>
+    public IRetryPolicyBuilder WithPolynomialFactor(double factor)
+    {
+        _retryPolicy.PolynomialFactor = factor;
+        return this;
+    }
 
     /// <summary>
     ///     Creates a new instance of the <see cref="RetryPolicyBuilder" /> class.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>
+    ///    An instance of <see cref="IRetryPolicyBuilder" />.
+    /// </returns>
     public static IRetryPolicyBuilder Create()
     {
         return new RetryPolicyBuilder();

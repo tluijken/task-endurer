@@ -219,7 +219,7 @@ public class RetryStepDefinitions
         retryPolicyBuilder.WithExpectedException<ApplicationException>();
     }
 
-    [Given(@"the retry policy has an (linear|exponential|fixed|fibonacci) backoff policy")]
+    [Given(@"the retry policy has an (linear|exponential|fixed|fibonacci|polynomial) backoff policy")]
     public void GivenTheRetryPolicyHasADefaultExponentialBackoffPolicy(BackoffStrategy backoffStrategy)
     {
         var scenarioContext = _serviceProvider.GetRequiredService<ScenarioContext>();
@@ -315,5 +315,13 @@ public class RetryStepDefinitions
         {
             scenarioContext.Set(e, Constants.RetryExceptionKey);
         }
+    }
+
+    [Given(@"the retry policy has a polynomial factor of (.*)")]
+    public void GivenTheRetryPolicyHasAPolynomialFactorOf(double polynomialFactor)
+    {
+        var scenarioContext = _serviceProvider.GetRequiredService<ScenarioContext>();
+        var retryPolicyBuilder = scenarioContext.Get<RetryPolicyBuilder>(Constants.RetryPolicyBuilderKey);
+        retryPolicyBuilder.WithPolynomialFactor(polynomialFactor);
     }
 }

@@ -13,7 +13,13 @@ internal struct RetryPolicy
         DelayBetweenRetries = TimeSpan.FromMilliseconds(100);
         MaxDuration = null;
         GracefulExceptionHandling = false;
+        PolynomialFactor = 2;
     }
+
+    /// <summary>
+    ///     The factor to use for the polynomial backoff strategy.
+    /// </summary>
+    public double PolynomialFactor { get; internal set; }
 
     /// <summary>
     ///     Registers an exception callback, which is called whenever an exception of type <typeparamref name="TException" />

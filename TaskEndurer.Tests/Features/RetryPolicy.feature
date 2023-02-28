@@ -141,6 +141,19 @@ Testing various retry policies
         When We execute a task that always fails
         Then retry should have taken 5 seconds
         
+    Scenario: Retry a task with the polynomial backoff policy
+        Given We construct a retry policy
+        And the retry policy has a maximum number of retries of 3
+        And the retry policy expects ApplicationExceptions to be thrown
+        And the retry policy has an polynomial backoff policy
+        And the retry policy has a delay of 1 second
+        And the retry policy has a polynomial factor of 3
+        And we build the retry policy
+        And we start measuring the time
+        When We execute a task that always fails
+        # (1x1³)1 + (2x2³)8 + (3x3³)27 = 36 seconds
+        Then retry should have taken 36 seconds
+        
     Scenario: Retry a function with a result a for a maximum amount of retries successfully
         Given We construct a retry policy
         And the retry policy has a maximum number of retries of 3
