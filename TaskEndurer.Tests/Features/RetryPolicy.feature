@@ -203,3 +203,13 @@ Testing various retry policies
         And the retry policy has a delay of 1 second
         And the retry policy has a polynomial factor of 0
         Then an ArgumentOutOfRangeException should be thrown
+        
+    Scenario: Retry a task with the invalid backoff policy
+        Given We construct a retry policy
+        And the retry policy has a maximum number of retries of 3
+        And the retry policy expects ApplicationExceptions to be thrown
+        And the retry policy has an invalid backoff policy
+        And the retry policy has a delay of 1 second
+        And we build the retry policy
+        When We execute a function with a result that fails 2 times
+        Then an ArgumentOutOfRangeException should be thrown

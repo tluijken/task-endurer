@@ -1033,6 +1033,52 @@ namespace TaskEndurer.Tests.Features
             this.ScenarioCleanup();
         }
         
+        [Xunit.SkippableFactAttribute(DisplayName="Retry a task with the invalid backoff policy")]
+        [Xunit.TraitAttribute("FeatureTitle", "RetryFeature")]
+        [Xunit.TraitAttribute("Description", "Retry a task with the invalid backoff policy")]
+        public void RetryATaskWithTheInvalidBackoffPolicy()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Retry a task with the invalid backoff policy", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 207
+    this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 208
+        testRunner.Given("We construct a retry policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 209
+        testRunner.And("the retry policy has a maximum number of retries of 3", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 210
+        testRunner.And("the retry policy expects ApplicationExceptions to be thrown", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 211
+        testRunner.And("the retry policy has an invalid backoff policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 212
+        testRunner.And("the retry policy has a delay of 1 second", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 213
+        testRunner.And("we build the retry policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 214
+        testRunner.When("We execute a function with a result that fails 2 times", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 215
+        testRunner.Then("an ArgumentOutOfRangeException should be thrown", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
         [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.9.0.0")]
         [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
         public class FixtureData : System.IDisposable

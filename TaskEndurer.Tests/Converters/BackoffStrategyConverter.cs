@@ -16,10 +16,14 @@ internal class BackoffStrategyConverter
     /// <returns>
     ///     A BackoffStrategy value.
     /// </returns>
-    [StepArgumentTransformation(@"(linear|exponential|fixed|fibonacci|polynomial)")]
+    [StepArgumentTransformation(@"(linear|exponential|fixed|fibonacci|polynomial|invalid)")]
     [SuppressMessage("Performance", "CA1822:Mark members as static")]
     public BackoffStrategy Convert(string value)
     {
+        if (value.Equals("invalid", StringComparison.OrdinalIgnoreCase))
+        {
+            return (BackoffStrategy)Int32.MaxValue;
+        }
         return Enum.Parse<BackoffStrategy>(value, true);
     }
 }

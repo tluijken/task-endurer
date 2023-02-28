@@ -219,7 +219,7 @@ public class RetryStepDefinitions
         retryPolicyBuilder.WithExpectedException<ApplicationException>();
     }
 
-    [Given(@"the retry policy has an (linear|exponential|fixed|fibonacci|polynomial) backoff policy")]
+    [Given(@"the retry policy has an (linear|exponential|fixed|fibonacci|polynomial|invalid) backoff policy")]
     public void GivenTheRetryPolicyHasADefaultExponentialBackoffPolicy(BackoffStrategy backoffStrategy)
     {
         var scenarioContext = _serviceProvider.GetRequiredService<ScenarioContext>();
@@ -277,6 +277,10 @@ public class RetryStepDefinitions
             }).ConfigureAwait(false);
             scenarioContext.Set(result, Constants.TaskResultKey);
         }
+        catch (ArgumentOutOfRangeException argumentOutOfRangeException)
+        {
+            scenarioContext.Set(argumentOutOfRangeException, Constants.RetryExceptionKey);
+        }
         catch (Exception e)
         {
             scenarioContext.Set(e, Constants.RetryExceptionKey);
@@ -328,7 +332,7 @@ public class RetryStepDefinitions
         }
         catch (Exception e)
         {
-            scenarioContext.Set(e, Constants.PolynomialExceptionKey);
+            scenarioContext.Set(e, Constants.RetryExceptionKey);
         }
     }
 
@@ -336,7 +340,7 @@ public class RetryStepDefinitions
     public void ThenAnArgumentOutOfRangeExceptionShouldBeThrown()
     {
         var scenarioContext = _serviceProvider.GetRequiredService<ScenarioContext>();
-        var exception = scenarioContext.Get<Exception>(Constants.PolynomialExceptionKey);
+        var exception = scenarioContext.Get<Exception>(Constants.RetryExceptionKey);
         Assert.IsType<ArgumentOutOfRangeException>(exception);
     }
 }

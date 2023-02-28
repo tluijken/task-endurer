@@ -161,6 +161,7 @@ internal sealed class RetryExecutor : IRetryExecutor
     {
         var retryCount = 0;
         while (true)
+        {
             try
             {
                 await taskToExecute().WaitAsync(cancellationToken).ConfigureAwait(false);
@@ -185,6 +186,7 @@ internal sealed class RetryExecutor : IRetryExecutor
                             $"{nextAction} is a unknown {nameof(RetryAction)} value.");
                 }
             }
+        }
     }
 
     /// <summary>
@@ -204,7 +206,9 @@ internal sealed class RetryExecutor : IRetryExecutor
         // throw if there are no corresponding callbacks (or) reached max retries.
         if (!_retryPolicy.ExceptionCallbacksByType.TryGetValue(ex.GetType(), out var exceptionCallback) ||
             (_retryPolicy.MaxRetries.HasValue && retryCount >= _retryPolicy.MaxRetries))
+        {
             return _retryPolicy.GracefulExceptionHandling ? RetryAction.GracefulExit : RetryAction.ThrowException;
+        }
 
         // the return bool value indicates whether to continue with retries or not.
         var continueExecution = exceptionCallback(ex);
