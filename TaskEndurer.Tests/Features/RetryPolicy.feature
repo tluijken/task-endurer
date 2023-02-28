@@ -262,3 +262,5 @@ Testing various retry policies
         And we build the retry policy
         When We execute a function with a result that fails 2 times
         Then an ArgumentOutOfRangeException should be thrown
+        
+    Scenario: Retry a task 

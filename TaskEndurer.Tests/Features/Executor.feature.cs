@@ -113,7 +113,7 @@ namespace TaskEndurer.Tests.Features
         testRunner.When("the executor is called with a task that has a result", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 9
-        testRunner.Then("the task should fail", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+        testRunner.Then("a NotSupportedException should be thrown", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -152,7 +152,85 @@ namespace TaskEndurer.Tests.Features
         testRunner.When("the executor is called with a task that has no result", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 16
-        testRunner.Then("the task should fail", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+        testRunner.Then("a NotSupportedException should be thrown", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="Validate that the UntilExpiredRetryExecutor cannot run when no maximum duration i" +
+            "s set in the retry policy when running a function.")]
+        [Xunit.TraitAttribute("FeatureTitle", "Executor feature")]
+        [Xunit.TraitAttribute("Description", "Validate that the UntilExpiredRetryExecutor cannot run when no maximum duration i" +
+            "s set in the retry policy when running a function.")]
+        [Xunit.TraitAttribute("Category", "Executor")]
+        public void ValidateThatTheUntilExpiredRetryExecutorCannotRunWhenNoMaximumDurationIsSetInTheRetryPolicyWhenRunningAFunction_()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "Executor"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Validate that the UntilExpiredRetryExecutor cannot run when no maximum duration i" +
+                    "s set in the retry policy when running a function.", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 19
+    this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 20
+        testRunner.Given("we have no maximum duration set for our retry policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 21
+        testRunner.And("We want to use a UntilExpiredRetryExecutor", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 22
+        testRunner.When("the executor is called with a function", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 23
+        testRunner.Then("a NotSupportedException should be thrown", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="Validate that the UntilExpiredRetryExecutor cannot run when no maximum duration i" +
+            "s set in the retry policy when running an action.")]
+        [Xunit.TraitAttribute("FeatureTitle", "Executor feature")]
+        [Xunit.TraitAttribute("Description", "Validate that the UntilExpiredRetryExecutor cannot run when no maximum duration i" +
+            "s set in the retry policy when running an action.")]
+        [Xunit.TraitAttribute("Category", "Executor")]
+        public void ValidateThatTheUntilExpiredRetryExecutorCannotRunWhenNoMaximumDurationIsSetInTheRetryPolicyWhenRunningAnAction_()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "Executor"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Validate that the UntilExpiredRetryExecutor cannot run when no maximum duration i" +
+                    "s set in the retry policy when running an action.", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 26
+    this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 27
+        testRunner.Given("we have no maximum duration set for our retry policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 28
+        testRunner.And("We want to use a UntilExpiredRetryExecutor", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 29
+        testRunner.When("the executor is called with an action", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 30
+        testRunner.Then("a NotSupportedException should be thrown", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
