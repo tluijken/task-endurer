@@ -9,6 +9,7 @@ internal static class Constants
     internal const string RetryExecutorKey = "retryExecutor";
     internal const string RetryPolicyBuilderKey = "retryExecutorBuilder";
     internal const string RetryExceptionKey = "retryException";
+    internal const string PolynomialExceptionKey = "polynomialException";
     internal const string TaskResultKey = "taskResult";
     internal const string RetryPolicyKey = "retryPolicy";
     internal const string IncrementalResultKey = "incrementalResult";

@@ -185,3 +185,21 @@ Testing various retry policies
         And we build the retry policy
         When We execute an action that fails 2 times
         Then the task should not fail
+        
+    Scenario: Retry a task with the polynomial backoff policy and a negative polynomial factor
+        Given We construct a retry policy
+        And the retry policy has a maximum number of retries of 3
+        And the retry policy expects ApplicationExceptions to be thrown
+        And the retry policy has an polynomial backoff policy
+        And the retry policy has a delay of 1 second
+        And the retry policy has a polynomial factor of -3
+        Then an ArgumentOutOfRangeException should be thrown
+        
+    Scenario: Retry a task with the polynomial backoff policy and a polynomial factor of zero
+        Given We construct a retry policy
+        And the retry policy has a maximum number of retries of 3
+        And the retry policy expects ApplicationExceptions to be thrown
+        And the retry policy has an polynomial backoff policy
+        And the retry policy has a delay of 1 second
+        And the retry policy has a polynomial factor of 0
+        Then an ArgumentOutOfRangeException should be thrown

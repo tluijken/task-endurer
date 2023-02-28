@@ -174,6 +174,10 @@ public sealed class RetryPolicyBuilder : IRetryPolicyBuilder
     /// </returns>
     public IRetryPolicyBuilder WithPolynomialFactor(double factor)
     {
+        if (factor <= 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(factor), "The polynomial factor must be greater than zero.");
+        }
         _retryPolicy.PolynomialFactor = factor;
         return this;
     }

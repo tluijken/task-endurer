@@ -322,6 +322,21 @@ public class RetryStepDefinitions
     {
         var scenarioContext = _serviceProvider.GetRequiredService<ScenarioContext>();
         var retryPolicyBuilder = scenarioContext.Get<RetryPolicyBuilder>(Constants.RetryPolicyBuilderKey);
-        retryPolicyBuilder.WithPolynomialFactor(polynomialFactor);
+        try
+        {
+            retryPolicyBuilder.WithPolynomialFactor(polynomialFactor);
+        }
+        catch (Exception e)
+        {
+            scenarioContext.Set(e, Constants.PolynomialExceptionKey);
+        }
+    }
+
+    [Then(@"an ArgumentOutOfRangeException should be thrown")]
+    public void ThenAnArgumentOutOfRangeExceptionShouldBeThrown()
+    {
+        var scenarioContext = _serviceProvider.GetRequiredService<ScenarioContext>();
+        var exception = scenarioContext.Get<Exception>(Constants.PolynomialExceptionKey);
+        Assert.IsType<ArgumentOutOfRangeException>(exception);
     }
 }
