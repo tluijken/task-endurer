@@ -76,6 +76,39 @@ Testing various retry policies
         Then the task should not fail
         When We execute a task that always fails
         Then the task should not fail
+      
+    Scenario: Retry a task without a return value a for a maximum amount of retries with graceful exception handling
+        Given We construct a retry policy
+        And the retry policy has a maximum number of retries of 3
+        And the retry policy expects ApplicationExceptions to be thrown
+        And we allow graceful exception handling
+        And we build the retry policy
+        When We execute a task without a result that always fails
+        Then the task should not fail
+        When We execute a task that always fails
+        Then the task should not fail
+    
+    Scenario: Retry an action without a return value a for a maximum amount of retries with graceful exception handling
+        Given We construct a retry policy
+        And the retry policy has a maximum number of retries of 3
+        And the retry policy expects ApplicationExceptions to be thrown
+        And we allow graceful exception handling
+        And we build the retry policy
+        When We execute an action that fails 10 times
+        Then the task should not fail
+        When We execute a task that always fails
+        Then the task should not fail
+    
+    Scenario: Retry a function a for a maximum amount of retries with graceful exception handling
+        Given We construct a retry policy
+        And the retry policy has a maximum number of retries of 3
+        And the retry policy expects ApplicationExceptions to be thrown
+        And we allow graceful exception handling
+        And we build the retry policy
+        When We execute a function with a result that fails 10 times
+        Then the task should not fail
+        When We execute a task that always fails
+        Then the task should not fail
         
     Scenario: Retry a task a for a maximum duration using the legacy exception registration
         Given We construct a retry policy
