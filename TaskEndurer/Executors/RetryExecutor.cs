@@ -1,10 +1,12 @@
-﻿using TaskEndurer.Helpers;
+﻿using System.Diagnostics.CodeAnalysis;
+using TaskEndurer.Helpers;
 
 namespace TaskEndurer.Executors;
 
 /// <summary>
 ///     Basic <see cref="IRetryExecutor" /> implementation for retrying operations.
 /// </summary>
+[SuppressMessage("ReSharper", "SwitchStatementHandlesSomeKnownEnumValuesWithDefault")]
 internal sealed class RetryExecutor : IRetryExecutor
 {
     private readonly RetryPolicy _retryPolicy;
@@ -49,9 +51,6 @@ internal sealed class RetryExecutor : IRetryExecutor
                         break;
                     case RetryAction.GracefulExit:
                         return default!;
-                    default:
-                        throw new ArgumentOutOfRangeException(
-                            $"{nextAction} is a unknown {nameof(RetryAction)} value.");
                 }
             }
         }
@@ -93,9 +92,6 @@ internal sealed class RetryExecutor : IRetryExecutor
                         break;
                     case RetryAction.GracefulExit:
                         return;
-                    default:
-                        throw new ArgumentOutOfRangeException(
-                            $"{nextAction} is a unknown {nameof(RetryAction)} value.");
                 }
             }
         }
@@ -143,9 +139,6 @@ internal sealed class RetryExecutor : IRetryExecutor
                         break;
                     case RetryAction.GracefulExit:
                         return default!;
-                    default:
-                        throw new ArgumentOutOfRangeException(
-                            $"{nextAction} is a unknown {nameof(RetryAction)} value.");
                 }
             }
         }
@@ -181,9 +174,6 @@ internal sealed class RetryExecutor : IRetryExecutor
                         break;
                     case RetryAction.GracefulExit:
                         return;
-                    default:
-                        throw new ArgumentOutOfRangeException(
-                            $"{nextAction} is a unknown {nameof(RetryAction)} value.");
                 }
             }
         }
