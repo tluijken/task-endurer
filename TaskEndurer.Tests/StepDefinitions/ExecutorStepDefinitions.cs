@@ -86,7 +86,10 @@ public class ExecutorStepDefinitions
         var executor = scenarioContext.Get<IRetryExecutor>(Constants.RetryExecutorKey);
         try
         {
-            await executor.ExecuteAsync(() => throw new NotImplementedException("This is a test exception.")).ConfigureAwait(false);
+            await executor.ExecuteAsync(() =>
+            {
+               Console.WriteLine("This won't be executed");
+            }).ConfigureAwait(false);
         }
         catch (Exception e)
         {
