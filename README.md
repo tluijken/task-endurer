@@ -49,7 +49,9 @@ var policy = RetryPolicyBuilder.Create()
     // Add a custom exception handler. If you cannot recover from the exception, you can throw it again.
     .WithExceptionHandling<HttpRequestException>(ex => Console.WriteLine($"Unable to handle HttpRequest: {ex}"))
     // If the operation fails after all retries, the program can continue gracefully.
-    .WithGracefulExceptionHandling();
+    .WithGracefulExceptionHandling()
+    // Sets the exponential factor for the polynomial backoff strategy.
+    .WithPolynomialFactor(2);
 ```
 
 Let's brake it down.
@@ -92,6 +94,11 @@ Then, you can customize your retry policy using the available methods:
 * `WithGracefulExceptionHandling` method: if the operation fails after all retries, this method allows the program to continue gracefully.
 ```csharp
 .WithGracefulExceptionHandling()
+```
+
+* `WithPolynomialFactor` method: sets the exponential factor for the polynomial backoff strategy. For example, to set the factor to 2, use the following code:
+```csharp
+.WithPolynomialFactor(2)
 ```
 
 ### Building and using the executor
