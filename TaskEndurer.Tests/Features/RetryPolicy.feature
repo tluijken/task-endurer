@@ -252,4 +252,10 @@ Testing various retry policies
         When We execute a function with a result that fails 2 times
         Then an ArgumentOutOfRangeException should be thrown
         
-    Scenario: Retry a task 
+    Scenario: Retry a task without specifying which exceptions to expect
+        Given We construct a retry policy
+        And the retry policy has a maximum number of retries of 3
+        And we build the retry policy
+        When We execute an action that fails 2 times
+        Then the task should fail
+       
