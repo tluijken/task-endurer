@@ -49,9 +49,7 @@ var policy = RetryPolicyBuilder.Create()
     // Add a custom exception handler. If you cannot recover from the exception, you can throw it again.
     .WithExceptionHandling<HttpRequestException>(ex => Console.WriteLine($"Unable to handle HttpRequest: {ex}"))
     // If the operation fails after all retries, the program can continue gracefully.
-    .WithGracefulExceptionHandling()
-    // Sets the exponential factor for the polynomial backoff strategy.
-    .WithPolynomialFactor(2);
+    .WithGracefulExceptionHandling();
 ```
 
 Let's brake it down.
@@ -96,11 +94,6 @@ Then, you can customize your retry policy using the available methods:
 .WithGracefulExceptionHandling()
 ```
 
-* `WithPolynomialFactor` method: sets the exponential factor for the polynomial backoff strategy. For example, to set the factor to 2, use the following code:
-```csharp
-.WithPolynomialFactor(2)
-```
-
 ### Building and using the executor
 
 After customizing your retry policy, you can execute the operation using the ExecuteAsync method of the policy. Here's an example of executing an HTTP request with the policy:
@@ -120,18 +113,14 @@ var response = await policy.ExecuteAsync(async () => await httpClient.GetAsync("
 | WithExpectedException         | Specifies which exception types to expect.                                                                                                           | -           |
 | WithGracefulExceptionHandling | Specifies that any exceptions should be gracefully handled and not thrown after the maximum duration or maximum number of retries have been reached. | false       |
 | WithExceptionCallback         | Registers a callback that will be called when an exception of a specified type occurs.                                                               | -           |
-| WithPolynomialFactor          | Specifies the exponential factor to use for the polynomial backoff strategy.                                                                         | 2           |
-
-
-
 
 ## Backoff strategies
-| Strategy    | Description                                                                                                                                                                                                                                                     |
-|-------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Linear      | The base delay time is equal to the attempt count.                                                                                                                                                                                                              |
-| Exponential | Increases the time between retries exponentially by the retry count.                                                                                                                                                                                            |
-| Fibonacci   | The base delay time is returned as the Fibonacci number corresponding to the current attempt.                                                                                                                                                                   |
-| Fixed       | The base delay time is calculated as a fixed value.                                                                                                                                                                                                             |
-| Polynomial  | The base delay time is calculated as: ae where:a is the number of unsuccessful attempts that have been made, e is the exponent configured for the strategy. The default exponential factor is 2, but can be altered using the `WithPolynomialFactor()` method |
+| Strategy    | Description                                                                                                                                                                                                                                                                                                  |
+|-------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Linear      | The base delay time is equal to the attempt count.                                                                                                                                                                                                                                                           |
+| Exponential | Increases the time between retries exponentially by the retry count.                                                                                                                                                                                                                                         |
+| Fibonacci   | The base delay time is returned as the Fibonacci number corresponding to the current attempt.                                                                                                                                                                                                                |
+| Fixed       | The base delay time is calculated as a fixed value.                                                                                                                                                                                                                                                          |
+| Polynomial  | The base delay time is calculated as: ae where:a is the number of unsuccessful attempts that have been made, e is the exponent configured for the strategy. The default exponential factor is 2, but can be altered calling the `WithBackoff()` method, provided with a `PolynomialBackoffStrategy` instance |
 
 Feedback is highly appreciated. Thank you for choosing TaskEndurer - happy coding!

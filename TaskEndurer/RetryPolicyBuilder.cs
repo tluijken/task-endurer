@@ -77,6 +77,25 @@ public sealed class RetryPolicyBuilder : IRetryPolicyBuilder
         _retryPolicy.BackoffStrategy = backoffStrategy;
         return this;
     }
+    
+    /// <summary>
+    ///     Specified the delay strategy.
+    /// </summary>
+    /// <param name="polynomialBackoffStrategy">
+    ///     The polynomial backoff strategy containing the exponential factor to use.
+    /// </param>
+    /// <returns>
+    ///     An instance of <see cref="IRetryPolicyBuilder" />.
+    /// </returns>
+    /// <exception cref="ArgumentNullException">
+    ///    Thrown if <paramref name="polynomialBackoffStrategy" /> is null.
+    /// </exception>
+    public IRetryPolicyBuilder WithBackoff(PolynomialBackoffStrategy polynomialBackoffStrategy)
+    {
+        ArgumentNullException.ThrowIfNull(polynomialBackoffStrategy);
+        _retryPolicy.BackoffStrategy = BackoffStrategy.Polynomial;
+        return WithPolynomialFactor(polynomialBackoffStrategy.PolynomialFactor);
+    }
 
     /// <summary>
     ///     The maximum amount of time to allow retries to occur.
@@ -172,7 +191,7 @@ public sealed class RetryPolicyBuilder : IRetryPolicyBuilder
     /// <returns>
     ///     An instance of <see cref="IRetryPolicyBuilder" />.
     /// </returns>
-    public IRetryPolicyBuilder WithPolynomialFactor(double factor)
+    private IRetryPolicyBuilder WithPolynomialFactor(double factor)
     {
         if (factor <= 0)
         {

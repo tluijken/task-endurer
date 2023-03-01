@@ -11,7 +11,6 @@ namespace TaskEndurer;
 ///     we’ve tried so many times that we just give up and handle the error.
 ///     <a href="https://backoff-utils.readthedocs.io">See more detailed information about backoff strategies here</a>
 /// </summary>
-[SuppressMessage("ReSharper", "UnusedMember.Global")]
 public enum BackoffStrategy
 {
     /// <summary>

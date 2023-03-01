@@ -321,26 +321,26 @@ public class RetryStepDefinitions
         }
     }
 
-    [Given(@"the retry policy has a polynomial factor of (.*)")]
-    public void GivenTheRetryPolicyHasAPolynomialFactorOf(double polynomialFactor)
-    {
-        var scenarioContext = _serviceProvider.GetRequiredService<ScenarioContext>();
-        var retryPolicyBuilder = scenarioContext.Get<RetryPolicyBuilder>(Constants.RetryPolicyBuilderKey);
-        try
-        {
-            retryPolicyBuilder.WithPolynomialFactor(polynomialFactor);
-        }
-        catch (Exception e)
-        {
-            scenarioContext.Set(e, Constants.RetryExceptionKey);
-        }
-    }
-
     [Then(@"an ArgumentOutOfRangeException should be thrown")]
     public void ThenAnArgumentOutOfRangeExceptionShouldBeThrown()
     {
         var scenarioContext = _serviceProvider.GetRequiredService<ScenarioContext>();
         var exception = scenarioContext.Get<Exception>(Constants.RetryExceptionKey);
         Assert.IsType<ArgumentOutOfRangeException>(exception);
+    }
+
+    [Given(@"the retry policy has an polynomial backoff policy with a polynomial factor of (.*)")]
+    public void GivenTheRetryPolicyHasAnPolynomialBackoffPolicyWithAPolynomialFactorOf(int polynomialFactor)
+    {
+        var scenarioContext = _serviceProvider.GetRequiredService<ScenarioContext>();
+        var retryPolicyBuilder = scenarioContext.Get<RetryPolicyBuilder>(Constants.RetryPolicyBuilderKey);
+        try
+        {
+            retryPolicyBuilder.WithBackoff(new PolynomialBackoffStrategy(polynomialFactor));
+        }
+        catch (ArgumentOutOfRangeException e)
+        {
+            scenarioContext.Set(e, Constants.RetryExceptionKey);
+        }
     }
 }
