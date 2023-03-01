@@ -687,14 +687,17 @@ namespace TaskEndurer.Tests.Features
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Retry a task a for a maximum duration using the legacy exception registration")]
+        [Xunit.SkippableFactAttribute(DisplayName="Retry a task for a maximum of 3 times with a 1 second delay which increments a co" +
+            "unter on each occurence of the expected exception")]
         [Xunit.TraitAttribute("FeatureTitle", "RetryFeature")]
-        [Xunit.TraitAttribute("Description", "Retry a task a for a maximum duration using the legacy exception registration")]
-        public void RetryATaskAForAMaximumDurationUsingTheLegacyExceptionRegistration()
+        [Xunit.TraitAttribute("Description", "Retry a task for a maximum of 3 times with a 1 second delay which increments a co" +
+            "unter on each occurence of the expected exception")]
+        public void RetryATaskForAMaximumOf3TimesWithA1SecondDelayWhichIncrementsACounterOnEachOccurenceOfTheExpectedException()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Retry a task a for a maximum duration using the legacy exception registration", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Retry a task for a maximum of 3 times with a 1 second delay which increments a co" +
+                    "unter on each occurence of the expected exception", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 129
     this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -709,66 +712,22 @@ namespace TaskEndurer.Tests.Features
         testRunner.Given("We construct a retry policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 131
-        testRunner.And("the maximum retry duration is 3 seconds", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-#line 132
-        testRunner.And("the retry policy registers the the expected exception of type ApplicationExceptio" +
-                        "n to be thrown using the legacy registration", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-#line 133
-        testRunner.And("we build the retry policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-#line 134
-        testRunner.When("We execute a task that always fails", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 135
-        testRunner.Then("the task should fail", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-            }
-            this.ScenarioCleanup();
-        }
-        
-        [Xunit.SkippableFactAttribute(DisplayName="Retry a task for a maximum of 3 times with a 1 second delay which increments a co" +
-            "unter on each occurence of the expected exception")]
-        [Xunit.TraitAttribute("FeatureTitle", "RetryFeature")]
-        [Xunit.TraitAttribute("Description", "Retry a task for a maximum of 3 times with a 1 second delay which increments a co" +
-            "unter on each occurence of the expected exception")]
-        public void RetryATaskForAMaximumOf3TimesWithA1SecondDelayWhichIncrementsACounterOnEachOccurenceOfTheExpectedException()
-        {
-            string[] tagsOfScenario = ((string[])(null));
-            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Retry a task for a maximum of 3 times with a 1 second delay which increments a co" +
-                    "unter on each occurence of the expected exception", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 137
-    this.ScenarioInitialize(scenarioInfo);
-#line hidden
-            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
-            {
-                testRunner.SkipScenario();
-            }
-            else
-            {
-                this.ScenarioStart();
-#line 138
-        testRunner.Given("We construct a retry policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line hidden
-#line 139
         testRunner.And("the retry policy has a maximum number of retries of 3", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 140
+#line 132
         testRunner.And("the retry policy has a delay of 1 second", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 141
+#line 133
         testRunner.And("a callback is registered to increment a counter on each occurence of the expected" +
                         " exception", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 142
+#line 134
         testRunner.And("we build the retry policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 143
+#line 135
         testRunner.When("We execute a task that always fails", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 144
+#line 136
         testRunner.Then("the increment counter should be 3", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
@@ -783,7 +742,7 @@ namespace TaskEndurer.Tests.Features
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Retry a task with the exponential backoff policy", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 146
+#line 138
     this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -793,31 +752,31 @@ namespace TaskEndurer.Tests.Features
             else
             {
                 this.ScenarioStart();
-#line 147
+#line 139
         testRunner.Given("We construct a retry policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 148
+#line 140
         testRunner.And("the retry policy has a maximum number of retries of 3", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 149
+#line 141
         testRunner.And("the retry policy expects ApplicationExceptions to be thrown", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 150
+#line 142
         testRunner.And("the retry policy has an exponential backoff policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 151
+#line 143
         testRunner.And("the retry policy has a delay of 1 second", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 152
+#line 144
         testRunner.And("we build the retry policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 153
+#line 145
         testRunner.And("we start measuring the time", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 154
+#line 146
         testRunner.When("We execute a task that always fails", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 156
+#line 148
         testRunner.Then("retry should have taken 14 seconds", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
@@ -832,7 +791,7 @@ namespace TaskEndurer.Tests.Features
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Retry a task with the linear backoff policy", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 158
+#line 150
     this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -842,31 +801,31 @@ namespace TaskEndurer.Tests.Features
             else
             {
                 this.ScenarioStart();
-#line 159
+#line 151
         testRunner.Given("We construct a retry policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 160
+#line 152
         testRunner.And("the retry policy has a maximum number of retries of 3", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 161
+#line 153
         testRunner.And("the retry policy expects ApplicationExceptions to be thrown", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 162
+#line 154
         testRunner.And("the retry policy has an linear backoff policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 163
+#line 155
         testRunner.And("the retry policy has a delay of 1 second", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 164
+#line 156
         testRunner.And("we build the retry policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 165
+#line 157
         testRunner.And("we start measuring the time", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 166
+#line 158
         testRunner.When("We execute a task that always fails", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 168
+#line 160
         testRunner.Then("retry should have taken 5 seconds", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
@@ -881,7 +840,7 @@ namespace TaskEndurer.Tests.Features
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Retry a task with the fibonacci backoff policy", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 170
+#line 162
     this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -891,31 +850,31 @@ namespace TaskEndurer.Tests.Features
             else
             {
                 this.ScenarioStart();
-#line 171
+#line 163
         testRunner.Given("We construct a retry policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 172
+#line 164
         testRunner.And("the retry policy has a maximum number of retries of 5", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 173
+#line 165
         testRunner.And("the retry policy expects ApplicationExceptions to be thrown", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 174
+#line 166
         testRunner.And("the retry policy has an fibonacci backoff policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 175
+#line 167
         testRunner.And("the retry policy has a delay of 1 second", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 176
+#line 168
         testRunner.And("we build the retry policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 177
+#line 169
         testRunner.And("we start measuring the time", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 178
+#line 170
         testRunner.When("We execute a task that always fails", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 180
+#line 172
         testRunner.Then("retry should have taken 12 seconds", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
@@ -930,7 +889,7 @@ namespace TaskEndurer.Tests.Features
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Retry a task with the fixed backoff policy", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 182
+#line 174
     this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -940,31 +899,31 @@ namespace TaskEndurer.Tests.Features
             else
             {
                 this.ScenarioStart();
-#line 183
+#line 175
         testRunner.Given("We construct a retry policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 184
+#line 176
         testRunner.And("the retry policy has a maximum number of retries of 5", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 185
+#line 177
         testRunner.And("the retry policy expects ApplicationExceptions to be thrown", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 186
+#line 178
         testRunner.And("the retry policy has an fixed backoff policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 187
+#line 179
         testRunner.And("the retry policy has a delay of 1 second", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 188
+#line 180
         testRunner.And("we build the retry policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 189
+#line 181
         testRunner.And("we start measuring the time", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 190
+#line 182
         testRunner.When("We execute a task that always fails", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 191
+#line 183
         testRunner.Then("retry should have taken 5 seconds", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
@@ -979,7 +938,7 @@ namespace TaskEndurer.Tests.Features
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Retry a task with the polynomial backoff policy", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 193
+#line 185
     this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -989,31 +948,31 @@ namespace TaskEndurer.Tests.Features
             else
             {
                 this.ScenarioStart();
-#line 194
+#line 186
         testRunner.Given("We construct a retry policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 195
+#line 187
         testRunner.And("the retry policy has a maximum number of retries of 3", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 196
+#line 188
         testRunner.And("the retry policy expects ApplicationExceptions to be thrown", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 197
+#line 189
         testRunner.And("the retry policy has an polynomial backoff policy with a polynomial factor of 3", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 198
+#line 190
         testRunner.And("the retry policy has a delay of 1 second", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 199
+#line 191
         testRunner.And("we build the retry policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 200
+#line 192
         testRunner.And("we start measuring the time", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 201
+#line 193
         testRunner.When("We execute a task that always fails", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 203
+#line 195
         testRunner.Then("retry should have taken 36 seconds", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
@@ -1028,6 +987,46 @@ namespace TaskEndurer.Tests.Features
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Retry a function with a result a for a maximum amount of retries successfully", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 197
+    this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 198
+        testRunner.Given("We construct a retry policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 199
+        testRunner.And("the retry policy has a maximum number of retries of 3", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 200
+        testRunner.And("the retry policy expects ApplicationExceptions to be thrown", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 201
+        testRunner.And("we build the retry policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 202
+        testRunner.When("We execute a function with a result that fails 2 times", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 203
+        testRunner.Then("result should be set to true", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="Retry an action a for a maximum amount of retries successfully")]
+        [Xunit.TraitAttribute("FeatureTitle", "RetryFeature")]
+        [Xunit.TraitAttribute("Description", "Retry an action a for a maximum amount of retries successfully")]
+        public void RetryAnActionAForAMaximumAmountOfRetriesSuccessfully()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Retry an action a for a maximum amount of retries successfully", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 205
     this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -1051,49 +1050,9 @@ namespace TaskEndurer.Tests.Features
         testRunner.And("we build the retry policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 210
-        testRunner.When("We execute a function with a result that fails 2 times", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 211
-        testRunner.Then("result should be set to true", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-            }
-            this.ScenarioCleanup();
-        }
-        
-        [Xunit.SkippableFactAttribute(DisplayName="Retry an action a for a maximum amount of retries successfully")]
-        [Xunit.TraitAttribute("FeatureTitle", "RetryFeature")]
-        [Xunit.TraitAttribute("Description", "Retry an action a for a maximum amount of retries successfully")]
-        public void RetryAnActionAForAMaximumAmountOfRetriesSuccessfully()
-        {
-            string[] tagsOfScenario = ((string[])(null));
-            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Retry an action a for a maximum amount of retries successfully", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 213
-    this.ScenarioInitialize(scenarioInfo);
-#line hidden
-            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
-            {
-                testRunner.SkipScenario();
-            }
-            else
-            {
-                this.ScenarioStart();
-#line 214
-        testRunner.Given("We construct a retry policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line hidden
-#line 215
-        testRunner.And("the retry policy has a maximum number of retries of 3", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-#line 216
-        testRunner.And("the retry policy expects ApplicationExceptions to be thrown", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-#line 217
-        testRunner.And("we build the retry policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-#line 218
         testRunner.When("We execute an action that fails 2 times", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 219
+#line 211
         testRunner.Then("the task should not fail", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
@@ -1108,6 +1067,46 @@ namespace TaskEndurer.Tests.Features
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Retry a function with a result a for a maximum duration successfully", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 213
+    this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 214
+        testRunner.Given("We construct a retry policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 215
+        testRunner.And("the maximum retry duration is 3 seconds", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 216
+        testRunner.And("the retry policy expects ApplicationExceptions to be thrown", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 217
+        testRunner.And("we build the retry policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 218
+        testRunner.When("We execute a function with a result that fails 2 times", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 219
+        testRunner.Then("result should be set to true", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="Retry an action a for a maximum duration successfully")]
+        [Xunit.TraitAttribute("FeatureTitle", "RetryFeature")]
+        [Xunit.TraitAttribute("Description", "Retry an action a for a maximum duration successfully")]
+        public void RetryAnActionAForAMaximumDurationSuccessfully()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Retry an action a for a maximum duration successfully", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 221
     this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -1131,49 +1130,9 @@ namespace TaskEndurer.Tests.Features
         testRunner.And("we build the retry policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 226
-        testRunner.When("We execute a function with a result that fails 2 times", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 227
-        testRunner.Then("result should be set to true", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-            }
-            this.ScenarioCleanup();
-        }
-        
-        [Xunit.SkippableFactAttribute(DisplayName="Retry an action a for a maximum duration successfully")]
-        [Xunit.TraitAttribute("FeatureTitle", "RetryFeature")]
-        [Xunit.TraitAttribute("Description", "Retry an action a for a maximum duration successfully")]
-        public void RetryAnActionAForAMaximumDurationSuccessfully()
-        {
-            string[] tagsOfScenario = ((string[])(null));
-            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Retry an action a for a maximum duration successfully", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 229
-    this.ScenarioInitialize(scenarioInfo);
-#line hidden
-            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
-            {
-                testRunner.SkipScenario();
-            }
-            else
-            {
-                this.ScenarioStart();
-#line 230
-        testRunner.Given("We construct a retry policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line hidden
-#line 231
-        testRunner.And("the maximum retry duration is 3 seconds", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-#line 232
-        testRunner.And("the retry policy expects ApplicationExceptions to be thrown", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-#line 233
-        testRunner.And("we build the retry policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-#line 234
         testRunner.When("We execute an action that fails 2 times", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 235
+#line 227
         testRunner.Then("the task should not fail", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
@@ -1188,6 +1147,46 @@ namespace TaskEndurer.Tests.Features
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Retry a task with the polynomial backoff policy and a negative polynomial factor", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 229
+    this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 230
+        testRunner.Given("We construct a retry policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 231
+        testRunner.And("the retry policy has a maximum number of retries of 3", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 232
+        testRunner.And("the retry policy expects ApplicationExceptions to be thrown", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 233
+        testRunner.And("the retry policy has an polynomial backoff policy with a polynomial factor of -3", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 234
+        testRunner.And("the retry policy has a delay of 1 second", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 235
+        testRunner.Then("an ArgumentOutOfRangeException should be thrown", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="Retry a task with the polynomial backoff policy and a polynomial factor of zero")]
+        [Xunit.TraitAttribute("FeatureTitle", "RetryFeature")]
+        [Xunit.TraitAttribute("Description", "Retry a task with the polynomial backoff policy and a polynomial factor of zero")]
+        public void RetryATaskWithThePolynomialBackoffPolicyAndAPolynomialFactorOfZero()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Retry a task with the polynomial backoff policy and a polynomial factor of zero", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 237
     this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -1208,7 +1207,7 @@ namespace TaskEndurer.Tests.Features
         testRunner.And("the retry policy expects ApplicationExceptions to be thrown", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 241
-        testRunner.And("the retry policy has an polynomial backoff policy with a polynomial factor of -3", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+        testRunner.And("the retry policy has an polynomial backoff policy with a polynomial factor of 0", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 242
         testRunner.And("the retry policy has a delay of 1 second", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
@@ -1220,14 +1219,14 @@ namespace TaskEndurer.Tests.Features
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Retry a task with the polynomial backoff policy and a polynomial factor of zero")]
+        [Xunit.SkippableFactAttribute(DisplayName="Retry a task with the invalid backoff policy")]
         [Xunit.TraitAttribute("FeatureTitle", "RetryFeature")]
-        [Xunit.TraitAttribute("Description", "Retry a task with the polynomial backoff policy and a polynomial factor of zero")]
-        public void RetryATaskWithThePolynomialBackoffPolicyAndAPolynomialFactorOfZero()
+        [Xunit.TraitAttribute("Description", "Retry a task with the invalid backoff policy")]
+        public void RetryATaskWithTheInvalidBackoffPolicy()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Retry a task with the polynomial backoff policy and a polynomial factor of zero", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Retry a task with the invalid backoff policy", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 245
     this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -1248,58 +1247,18 @@ namespace TaskEndurer.Tests.Features
         testRunner.And("the retry policy expects ApplicationExceptions to be thrown", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 249
-        testRunner.And("the retry policy has an polynomial backoff policy with a polynomial factor of 0", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+        testRunner.And("the retry policy has an invalid backoff policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 250
         testRunner.And("the retry policy has a delay of 1 second", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 251
-        testRunner.Then("an ArgumentOutOfRangeException should be thrown", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-            }
-            this.ScenarioCleanup();
-        }
-        
-        [Xunit.SkippableFactAttribute(DisplayName="Retry a task with the invalid backoff policy")]
-        [Xunit.TraitAttribute("FeatureTitle", "RetryFeature")]
-        [Xunit.TraitAttribute("Description", "Retry a task with the invalid backoff policy")]
-        public void RetryATaskWithTheInvalidBackoffPolicy()
-        {
-            string[] tagsOfScenario = ((string[])(null));
-            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Retry a task with the invalid backoff policy", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 253
-    this.ScenarioInitialize(scenarioInfo);
-#line hidden
-            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
-            {
-                testRunner.SkipScenario();
-            }
-            else
-            {
-                this.ScenarioStart();
-#line 254
-        testRunner.Given("We construct a retry policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line hidden
-#line 255
-        testRunner.And("the retry policy has a maximum number of retries of 3", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-#line 256
-        testRunner.And("the retry policy expects ApplicationExceptions to be thrown", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-#line 257
-        testRunner.And("the retry policy has an invalid backoff policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-#line 258
-        testRunner.And("the retry policy has a delay of 1 second", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-#line 259
         testRunner.And("we build the retry policy", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 260
+#line 252
         testRunner.When("We execute a function with a result that fails 2 times", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 261
+#line 253
         testRunner.Then("an ArgumentOutOfRangeException should be thrown", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
@@ -1314,7 +1273,7 @@ namespace TaskEndurer.Tests.Features
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Retry a task", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 263
+#line 255
     this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))

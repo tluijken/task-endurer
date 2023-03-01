@@ -244,16 +244,6 @@ public class RetryStepDefinitions
         Assert.True(Math.Abs(Math.Floor(duration.TotalSeconds) - expectedMinimumDurationInSeconds) <= 1, $"The retry duration {duration} was not as expected {expectedMinimumDurationInSeconds}");
     }
 
-    [Given(@"the retry policy registers the the expected exception of type ApplicationException to be thrown using the legacy registration")]
-    public void GivenTheRetryPolicyRegistersTheTheExpectedExceptionOfTypeApplicationExceptionToBeThrownUsingTheLegacyRegistration()
-    {
-        var scenarioContext = _serviceProvider.GetRequiredService<ScenarioContext>();
-        var retryPolicyBuilder = scenarioContext.Get<RetryPolicyBuilder>(Constants.RetryPolicyBuilderKey);
-#pragma warning disable CS0618
-        retryPolicyBuilder.ContinueOnException<ApplicationException>(true);
-#pragma warning restore CS0618
-    }
-
     [When(@"We execute a function with a result that fails (.*) times")]
     public async Task WhenWeExecuteAFunctionWithAResultThatFailsTimes(int maxFailCount)
     {

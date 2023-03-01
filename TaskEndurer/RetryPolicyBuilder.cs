@@ -5,7 +5,7 @@ namespace TaskEndurer;
 /// <summary>
 ///     A class that can be used to build a <see cref="RetryPolicy" />.
 /// </summary>
-public sealed class RetryPolicyBuilder : IRetryPolicyBuilder
+public sealed class RetryPolicyBuilder
 {
     private RetryPolicy _retryPolicy;
 
@@ -17,14 +17,13 @@ public sealed class RetryPolicyBuilder : IRetryPolicyBuilder
         _retryPolicy = new RetryPolicy();
     }
 
-
     /// <summary>
     ///     Specifies that any exceptions should be gracefully handled and not thrown once the retry count has been reached.
     /// </summary>
     /// <returns>
-    ///     An instance of <see cref="IRetryPolicyBuilder" />.
+    ///     An instance of <see cref="RetryPolicyBuilder" />.
     /// </returns>
-    public IRetryPolicyBuilder WithGracefulExceptionHandling()
+    public RetryPolicyBuilder WithGracefulExceptionHandling()
     {
         _retryPolicy.GracefulExceptionHandling = true;
         return this;
@@ -38,9 +37,9 @@ public sealed class RetryPolicyBuilder : IRetryPolicyBuilder
     /// </remarks>
     /// <param name="delayBetweenRetries">The delay to use between retries.</param>
     /// <returns>
-    ///     An instance of <see cref="IRetryPolicyBuilder" />.
+    ///     An instance of <see cref="RetryPolicyBuilder" />.
     /// </returns>
-    public IRetryPolicyBuilder WithDelay(TimeSpan delayBetweenRetries)
+    public RetryPolicyBuilder WithDelay(TimeSpan delayBetweenRetries)
     {
         _retryPolicy.DelayBetweenRetries = delayBetweenRetries;
         return this;
@@ -51,9 +50,9 @@ public sealed class RetryPolicyBuilder : IRetryPolicyBuilder
     /// </summary>
     /// <param name="maxRetries">The maximum number of retries.</param>
     /// <returns>
-    ///     An instance of <see cref="IRetryPolicyBuilder" />.
+    ///     An instance of <see cref="RetryPolicyBuilder" />.
     /// </returns>
-    public IRetryPolicyBuilder WithMaxRetries(int maxRetries)
+    public RetryPolicyBuilder WithMaxRetries(int maxRetries)
     {
         _retryPolicy.MaxRetries = maxRetries;
         return this;
@@ -70,14 +69,14 @@ public sealed class RetryPolicyBuilder : IRetryPolicyBuilder
     ///     The delay strategy to use.
     /// </param>
     /// <returns>
-    ///     An instance of <see cref="IRetryPolicyBuilder" />.
+    ///     An instance of <see cref="RetryPolicyBuilder" />.
     /// </returns>
-    public IRetryPolicyBuilder WithBackoff(BackoffStrategy backoffStrategy)
+    public RetryPolicyBuilder WithBackoff(BackoffStrategy backoffStrategy)
     {
         _retryPolicy.BackoffStrategy = backoffStrategy;
         return this;
     }
-    
+
     /// <summary>
     ///     Specified the delay strategy.
     /// </summary>
@@ -85,12 +84,12 @@ public sealed class RetryPolicyBuilder : IRetryPolicyBuilder
     ///     The polynomial backoff strategy containing the exponential factor to use.
     /// </param>
     /// <returns>
-    ///     An instance of <see cref="IRetryPolicyBuilder" />.
+    ///     An instance of <see cref="RetryPolicyBuilder" />.
     /// </returns>
     /// <exception cref="ArgumentNullException">
     ///    Thrown if <paramref name="polynomialBackoffStrategy" /> is null.
     /// </exception>
-    public IRetryPolicyBuilder WithBackoff(PolynomialBackoffStrategy polynomialBackoffStrategy)
+    public RetryPolicyBuilder WithBackoff(PolynomialBackoffStrategy polynomialBackoffStrategy)
     {
         ArgumentNullException.ThrowIfNull(polynomialBackoffStrategy);
         _retryPolicy.BackoffStrategy = BackoffStrategy.Polynomial;
@@ -104,28 +103,11 @@ public sealed class RetryPolicyBuilder : IRetryPolicyBuilder
     ///     The maximum amount of time to allow retries to occur.
     /// </param>
     /// <returns>
-    ///     An instance of <see cref="IRetryPolicyBuilder" />.
+    ///     An instance of <see cref="RetryPolicyBuilder" />.
     /// </returns>
-    public IRetryPolicyBuilder WithMaxDuration(TimeSpan maxDuration)
+    public RetryPolicyBuilder WithMaxDuration(TimeSpan maxDuration)
     {
         _retryPolicy.MaxDuration = maxDuration;
-        return this;
-    }
-
-    /// <summary>
-    ///     Specifies if the retry policy should retry whenever the <typeparamref name="TException" /> occurs.
-    /// </summary>
-    /// <param name="retryOnException">
-    ///     Indicates whether the retry policy should continue retrying if this type of exception occurs.
-    /// </param>
-    /// <typeparam name="TException">The exception type to retry on.</typeparam>
-    /// <returns>
-    ///     An instance of <see cref="IRetryPolicyBuilder" />.
-    /// </returns>
-    [Obsolete("Use WithExpectedException instead.")]
-    public IRetryPolicyBuilder ContinueOnException<TException>(bool retryOnException) where TException : Exception
-    {
-        _retryPolicy.RegisterExceptionCallback<TException>(_ => retryOnException);
         return this;
     }
 
@@ -148,11 +130,11 @@ public sealed class RetryPolicyBuilder : IRetryPolicyBuilder
     ///     The exception type to retry on.
     /// </typeparam>
     /// <returns>
-    ///     An instance of <see cref="IRetryPolicyBuilder" />.
+    ///     An instance of <see cref="RetryPolicyBuilder" />.
     /// </returns>
-    public IRetryPolicyBuilder WithExpectedException<TException>() where TException : Exception
+    public RetryPolicyBuilder WithExpectedException<TException>() where TException : Exception
     {
-        _retryPolicy.RegisterExceptionCallback<TException>(_ => true);
+        _retryPolicy.RegisterExceptionCallback<TException>(_ => { });
         return this;
     }
 
@@ -169,19 +151,18 @@ public sealed class RetryPolicyBuilder : IRetryPolicyBuilder
     ///     The exception type to register the callback for.
     /// </typeparam>
     /// <returns>
-    ///     An instance of <see cref="IRetryPolicyBuilder" />.
+    ///     An instance of <see cref="RetryPolicyBuilder" />.
     /// </returns>
-    public IRetryPolicyBuilder WithExceptionHandling<TException>(Action<TException> exceptionCallback)
+    public RetryPolicyBuilder WithExceptionHandling<TException>(Action<TException> exceptionCallback)
         where TException : Exception
     {
         _retryPolicy.RegisterExceptionCallback<TException>(ex =>
         {
             exceptionCallback.Invoke((TException)ex);
-            return true;
         });
         return this;
     }
-    
+
     /// <summary>
     ///     Specifies the factor to use when calculating the delay between retries when using the <see cref="BackoffStrategy.Polynomial" /> strategy.
     /// </summary>
@@ -189,9 +170,9 @@ public sealed class RetryPolicyBuilder : IRetryPolicyBuilder
     ///     The polynomial factor to use.
     /// </param>
     /// <returns>
-    ///     An instance of <see cref="IRetryPolicyBuilder" />.
+    ///     An instance of <see cref="RetryPolicyBuilder" />.
     /// </returns>
-    private IRetryPolicyBuilder WithPolynomialFactor(double factor)
+    private RetryPolicyBuilder WithPolynomialFactor(double factor)
     {
         if (factor <= 0)
         {
@@ -205,9 +186,9 @@ public sealed class RetryPolicyBuilder : IRetryPolicyBuilder
     ///     Creates a new instance of the <see cref="RetryPolicyBuilder" /> class.
     /// </summary>
     /// <returns>
-    ///    An instance of <see cref="IRetryPolicyBuilder" />.
+    ///    An instance of <see cref="RetryPolicyBuilder" />.
     /// </returns>
-    public static IRetryPolicyBuilder Create()
+    public static RetryPolicyBuilder Create()
     {
         return new RetryPolicyBuilder();
     }

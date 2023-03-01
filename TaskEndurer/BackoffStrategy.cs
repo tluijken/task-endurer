@@ -1,6 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-
-namespace TaskEndurer;
+﻿namespace TaskEndurer;
 
 /// <summary>
 ///     Often, when making function calls, something goes wrong. The internet might glitch. The API we’re calling might

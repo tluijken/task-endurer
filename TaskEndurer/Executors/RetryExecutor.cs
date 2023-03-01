@@ -201,8 +201,8 @@ internal sealed class RetryExecutor : IRetryExecutor
         }
 
         // the return bool value indicates whether to continue with retries or not.
-        var continueExecution = exceptionCallback(ex);
-        return continueExecution ? RetryAction.Retry : RetryAction.ThrowException;
+        exceptionCallback(ex);
+        return RetryAction.Retry;
     }
 
     /// <summary>
