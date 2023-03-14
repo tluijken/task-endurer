@@ -1,11 +1,6 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿namespace TaskEndurer.Helpers;
 
-namespace TaskEndurer.Helpers;
-
-[SuppressMessage("ReSharper", "UnusedMember.Global")]
-[SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
-[SuppressMessage("ReSharper", "CA1815")]
-internal struct RetryPolicy
+public record RetryPolicy
 {
     public RetryPolicy()
     {
@@ -58,7 +53,6 @@ internal struct RetryPolicy
     /// <remarks>
     ///     Defaults to <see cref="TaskEndurer.BackoffStrategy.Fixed" />.
     /// </remarks>
-    [SuppressMessage("ReSharper", "AutoPropertyCanBeMadeGetOnly.Global")]
     internal BackoffStrategy BackoffStrategy { get; set; } = BackoffStrategy.Fixed;
 
     /// <summary>

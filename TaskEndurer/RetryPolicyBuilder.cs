@@ -1,21 +1,16 @@
-﻿using TaskEndurer.Helpers;
+using TaskEndurer.Helpers;
 
 namespace TaskEndurer;
 
-/// <summary>
-///     A class that can be used to build a <see cref="RetryPolicy" />.
-/// </summary>
-public sealed class RetryPolicyBuilder
+public class RetryPolicyBuilder : GenericFunctionalBuilder<RetryPolicy, RetryPolicyBuilder>
 {
-    private RetryPolicy _retryPolicy;
-
     /// <summary>
     ///     Creates a new instance of the <see cref="RetryPolicyBuilder" /> class.
     /// </summary>
-    private RetryPolicyBuilder()
-    {
-        _retryPolicy = new RetryPolicy();
-    }
+    /// <returns>
+    ///    An instance of <see cref="RetryPolicyBuilder" />.
+    /// </returns>
+    public static RetryPolicyBuilder Create() => new();
 
     /// <summary>
     ///     Specifies that any exceptions should be gracefully handled and not thrown once the retry count has been reached.
@@ -23,11 +18,7 @@ public sealed class RetryPolicyBuilder
     /// <returns>
     ///     An instance of <see cref="RetryPolicyBuilder" />.
     /// </returns>
-    public RetryPolicyBuilder WithGracefulExceptionHandling()
-    {
-        _retryPolicy.GracefulExceptionHandling = true;
-        return this;
-    }
+    public RetryPolicyBuilder WithGracefulExceptionHandling() => Do(policy => policy.GracefulExceptionHandling = true);
 
     /// <summary>
     ///     Specified the delay used between retries.
@@ -39,11 +30,7 @@ public sealed class RetryPolicyBuilder
     /// <returns>
     ///     An instance of <see cref="RetryPolicyBuilder" />.
     /// </returns>
-    public RetryPolicyBuilder WithDelay(TimeSpan delayBetweenRetries)
-    {
-        _retryPolicy.DelayBetweenRetries = delayBetweenRetries;
-        return this;
-    }
+    public RetryPolicyBuilder WithDelay(TimeSpan delayBetweenRetries) => Do(policy => policy.DelayBetweenRetries = delayBetweenRetries);
 
     /// <summary>
     ///     Specified the maximum number of retries.
@@ -52,11 +39,7 @@ public sealed class RetryPolicyBuilder
     /// <returns>
     ///     An instance of <see cref="RetryPolicyBuilder" />.
     /// </returns>
-    public RetryPolicyBuilder WithMaxRetries(int maxRetries)
-    {
-        _retryPolicy.MaxRetries = maxRetries;
-        return this;
-    }
+    public RetryPolicyBuilder WithMaxRetries(int maxRetries) => Do(policy => policy.MaxRetries = maxRetries);
 
     /// <summary>
     ///     Specified the delay strategy.
@@ -71,11 +54,7 @@ public sealed class RetryPolicyBuilder
     /// <returns>
     ///     An instance of <see cref="RetryPolicyBuilder" />.
     /// </returns>
-    public RetryPolicyBuilder WithBackoff(BackoffStrategy backoffStrategy)
-    {
-        _retryPolicy.BackoffStrategy = backoffStrategy;
-        return this;
-    }
+    public RetryPolicyBuilder WithBackoff(BackoffStrategy backoffStrategy) => Do(policy => policy.BackoffStrategy = backoffStrategy);
 
     /// <summary>
     ///     Specified the delay strategy.
@@ -92,7 +71,7 @@ public sealed class RetryPolicyBuilder
     public RetryPolicyBuilder WithBackoff(PolynomialBackoffStrategy polynomialBackoffStrategy)
     {
         ArgumentNullException.ThrowIfNull(polynomialBackoffStrategy);
-        _retryPolicy.BackoffStrategy = BackoffStrategy.Polynomial;
+        Do(policy => policy.BackoffStrategy = BackoffStrategy.Polynomial);
         return WithPolynomialFactor(polynomialBackoffStrategy.PolynomialFactor);
     }
 
@@ -105,20 +84,13 @@ public sealed class RetryPolicyBuilder
     /// <returns>
     ///     An instance of <see cref="RetryPolicyBuilder" />.
     /// </returns>
-    public RetryPolicyBuilder WithMaxDuration(TimeSpan maxDuration)
-    {
-        _retryPolicy.MaxDuration = maxDuration;
-        return this;
-    }
+    public RetryPolicyBuilder WithMaxDuration(TimeSpan maxDuration) => Do(policy => policy.MaxDuration = maxDuration);
 
     /// <summary>
     ///     Builds the retry policy and returns an executor that can be used to execute the action.
     /// </summary>
     /// <returns>an <see cref="IRetryExecutor" /> that can be used to execute the action</returns>
-    public IRetryExecutor Build()
-    {
-        return RetryExecutorFactory.Create(_retryPolicy);
-    }
+    public new IRetryExecutor Build() => RetryExecutorFactory.Create(base.Build());
 
     /// <summary>
     ///     Specifies if the retry policy should retry whenever the <typeparamref name="TException" /> occurs.
@@ -132,11 +104,7 @@ public sealed class RetryPolicyBuilder
     /// <returns>
     ///     An instance of <see cref="RetryPolicyBuilder" />.
     /// </returns>
-    public RetryPolicyBuilder WithExpectedException<TException>() where TException : Exception
-    {
-        _retryPolicy.RegisterExceptionCallback<TException>(_ => { });
-        return this;
-    }
+    public RetryPolicyBuilder WithExpectedException<TException>() where TException : Exception => Do(policy => policy.RegisterExceptionCallback<TException>(_ => { }));
 
     /// <summary>
     ///     Registers a callback that will be invoked whenever the <typeparamref name="TException" /> occurs.
@@ -153,15 +121,7 @@ public sealed class RetryPolicyBuilder
     /// <returns>
     ///     An instance of <see cref="RetryPolicyBuilder" />.
     /// </returns>
-    public RetryPolicyBuilder WithExceptionHandling<TException>(Action<TException> exceptionCallback)
-        where TException : Exception
-    {
-        _retryPolicy.RegisterExceptionCallback<TException>(ex =>
-        {
-            exceptionCallback.Invoke((TException)ex);
-        });
-        return this;
-    }
+    public RetryPolicyBuilder WithExceptionHandling<TException>(Action<TException> exceptionCallback) where TException : Exception => Do(policy => policy.RegisterExceptionCallback<TException>(ex => exceptionCallback((TException)ex)));
 
     /// <summary>
     ///     Specifies the factor to use when calculating the delay between retries when using the <see cref="BackoffStrategy.Polynomial" /> strategy.
@@ -178,18 +138,7 @@ public sealed class RetryPolicyBuilder
         {
             throw new ArgumentOutOfRangeException(nameof(factor), "The polynomial factor must be greater than zero.");
         }
-        _retryPolicy.PolynomialFactor = factor;
-        return this;
-    }
 
-    /// <summary>
-    ///     Creates a new instance of the <see cref="RetryPolicyBuilder" /> class.
-    /// </summary>
-    /// <returns>
-    ///    An instance of <see cref="RetryPolicyBuilder" />.
-    /// </returns>
-    public static RetryPolicyBuilder Create()
-    {
-        return new RetryPolicyBuilder();
+        return Do(policy => policy.PolynomialFactor = factor);
     }
 }

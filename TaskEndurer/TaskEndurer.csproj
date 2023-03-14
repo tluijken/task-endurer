@@ -26,4 +26,8 @@
         <None Update="icon.png" Pack="true" PackagePath="\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Remove="RetryPolicyBuilderLegacy.cs" />
+    </ItemGroup>
+
 </Project>
