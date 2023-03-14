@@ -17,10 +17,7 @@ internal sealed class RetryExecutor : IRetryExecutor
     /// <param name="retryPolicy">
     ///     The retry configuration.
     /// </param>
-    public RetryExecutor(RetryPolicy retryPolicy)
-    {
-        _retryPolicy = retryPolicy;
-    }
+    public RetryExecutor(RetryPolicy retryPolicy) => _retryPolicy = retryPolicy;
 
     /// <summary>
     ///     Retries the specified operation, as long as the retry policy allows it.
@@ -28,33 +25,8 @@ internal sealed class RetryExecutor : IRetryExecutor
     /// <param name="taskToExecute">The action to execute.</param>
     /// <param name="cancellationToken">A cancellation token used to cancel the work.</param>
     /// <returns>An awaitable task.</returns>
-    public async Task<T> ExecuteAsync<T>(Func<Task<T>> taskToExecute, CancellationToken cancellationToken = default)
-    {
-        var retryCount = 0;
-        while (true)
-        {
-            try
-            {
-                return await taskToExecute().WaitAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                var nextAction = DetermineNextAction(ex, retryCount);
-                switch (nextAction)
-                {
-                    case RetryAction.ThrowException: throw;
-                    case RetryAction.Retry:
-                        retryCount++;
-                        // Try to sleep for the calculated duration,
-                        await Task.Delay(DetermineDelayUntilNextIteration(retryCount), cancellationToken)
-                            .ConfigureAwait(false);
-                        break;
-                    case RetryAction.GracefulExit:
-                        return default!;
-                }
-            }
-        }
-    }
+    public Task<T> ExecuteAsync<T>(Func<Task<T>> taskToExecute, CancellationToken cancellationToken = default) =>
+        ExecuteAndCatchAsync(taskToExecute, cancellationToken);
 
     /// <summary>
     ///     Retries the specified operation, as long as the retry policy allows it.
@@ -68,34 +40,12 @@ internal sealed class RetryExecutor : IRetryExecutor
     /// <exception cref="ArgumentOutOfRangeException">
     ///     Thrown when the <see cref="RetryAction" /> is not supported.
     /// </exception>
-    public async Task ExecuteAsync(Action actionToExecute, CancellationToken cancellationToken = default)
-    {
-        var retryCount = 0;
-        while (true)
+    public Task ExecuteAsync(Action actionToExecute, CancellationToken cancellationToken = default) =>
+        ExecuteAndCatchAsync(() =>
         {
-            try
-            {
-                actionToExecute();
-                break;
-            }
-            catch (Exception ex)
-            {
-                var nextAction = DetermineNextAction(ex, retryCount);
-                switch (nextAction)
-                {
-                    case RetryAction.ThrowException: throw;
-                    case RetryAction.Retry:
-                        retryCount++;
-                        // Try to sleep for the calculated duration,
-                        await Task.Delay(DetermineDelayUntilNextIteration(retryCount), cancellationToken)
-                            .ConfigureAwait(false);
-                        break;
-                    case RetryAction.GracefulExit:
-                        return;
-                }
-            }
-        }
-    }
+            actionToExecute();
+            return Task.FromResult(0);
+        }, cancellationToken);
 
     /// <summary>
     ///     Retries the specified operation, as long as the retry policy allows it.
@@ -110,24 +60,53 @@ internal sealed class RetryExecutor : IRetryExecutor
     ///     The type of the result.
     /// </typeparam>
     /// <returns>
-    ///    The result of the operation.
+    ///     The result of the operation.
     /// </returns>
     /// <exception cref="ArgumentOutOfRangeException">
-    ///    Thrown when the <see cref="RetryAction" /> is not supported.
+    ///     Thrown when the <see cref="RetryAction" /> is not supported.
     /// </exception>
-    public async Task<T> ExecuteAsync<T>(Func<T> actionToExecute, CancellationToken cancellationToken = default)
+    public Task<T> ExecuteAsync<T>(Func<T> actionToExecute, CancellationToken cancellationToken = default) => 
+        ExecuteAndCatchAsync(() => Task.Run(actionToExecute, cancellationToken), cancellationToken);
+
+    /// <summary>
+    ///     Retries the specified operation, as long as the retry policy allows it.
+    /// </summary>
+    /// <param name="taskToExecute">The action to execute.</param>
+    /// <param name="cancellationToken">A cancellation token used to cancel the work.</param>
+    /// <returns>An awaitable task.</returns>
+    public Task ExecuteAsync(Func<Task> taskToExecute, CancellationToken cancellationToken = default) =>
+        ExecuteAndCatchAsync(async () =>
+        {
+            await taskToExecute().ConfigureAwait(false);
+            return 0;
+        }, cancellationToken);
+
+    /// <summary>
+    ///     Executes the specified task and catches any exceptions that are thrown.
+    /// </summary>
+    /// <param name="taskToExecute">
+    ///    The task to execute.
+    /// </param>
+    /// <param name="cancellationToken">
+    ///    A cancellation token used to cancel the work.
+    /// </param>
+    /// <typeparam name="T">
+    ///     The type of the result.
+    /// </typeparam>
+    /// <returns></returns>
+    private async Task<T> ExecuteAndCatchAsync<T>(Func<Task<T>> taskToExecute, CancellationToken cancellationToken)
     {
         var retryCount = 0;
         while (true)
         {
             try
             {
-                var result = actionToExecute();
+                var result = await taskToExecute().ConfigureAwait(false);
                 return result;
             }
             catch (Exception ex)
             {
-                var nextAction = DetermineNextAction(ex, retryCount);
+                var nextAction = GetNextRetryAction(ex, retryCount);
                 switch (nextAction)
                 {
                     case RetryAction.ThrowException: throw;
@@ -145,39 +124,13 @@ internal sealed class RetryExecutor : IRetryExecutor
     }
 
     /// <summary>
-    ///     Retries the specified operation, as long as the retry policy allows it.
+    ///     The callback to invoke when an exception is thrown and the retry policy allows for a retry.
     /// </summary>
-    /// <param name="taskToExecute">The action to execute.</param>
-    /// <param name="cancellationToken">A cancellation token used to cancel the work.</param>
-    /// <returns>An awaitable task.</returns>
-    public async Task ExecuteAsync(Func<Task> taskToExecute, CancellationToken cancellationToken = default)
+    private static readonly Func<Action<Exception>, Exception, RetryAction> HandleCallBackAndRetry = (callback, ex) =>
     {
-        var retryCount = 0;
-        while (true)
-        {
-            try
-            {
-                await taskToExecute().WaitAsync(cancellationToken).ConfigureAwait(false);
-                break;
-            }
-            catch (Exception ex)
-            {
-                var nextAction = DetermineNextAction(ex, retryCount);
-                switch (nextAction)
-                {
-                    case RetryAction.ThrowException: throw;
-                    case RetryAction.Retry:
-                        retryCount++;
-                        // Try to sleep for the calculated duration,
-                        await Task.Delay(DetermineDelayUntilNextIteration(retryCount), cancellationToken)
-                            .ConfigureAwait(false);
-                        break;
-                    case RetryAction.GracefulExit:
-                        return;
-                }
-            }
-        }
-    }
+        callback.Invoke(ex);
+        return RetryAction.Retry;
+    };
 
     /// <summary>
     ///     Determines the next action to take based on the exception and the retry count.
@@ -186,23 +139,24 @@ internal sealed class RetryExecutor : IRetryExecutor
     ///     The exception that was thrown during the execution.
     /// </param>
     /// <param name="retryCount">
-    ///    The current retry count.
+    ///     The current retry count.
     /// </param>
     /// <returns>
     ///     The next action to take.
     /// </returns>
-    private RetryAction DetermineNextAction(Exception ex, int retryCount)
+    private RetryAction GetNextRetryAction(Exception ex, int retryCount)
     {
-        // throw if there are no corresponding callbacks (or) reached max retries.
-        if (!_retryPolicy.ExceptionCallbacksByType.TryGetValue(ex.GetType(), out var exceptionCallback) ||
-            (_retryPolicy.MaxRetries.HasValue && retryCount >= _retryPolicy.MaxRetries))
+        var maxRetriesReached = _retryPolicy.MaxRetries.HasValue && retryCount >= _retryPolicy.MaxRetries;
+        var exceptionCallback = _retryPolicy.ExceptionCallbacksByType.TryGetValue(ex.GetType(), out var cb) ? cb : null;
+        return (!maxRetriesReached && exceptionCallback is not null) switch
         {
-            return _retryPolicy.GracefulExceptionHandling ? RetryAction.GracefulExit : RetryAction.ThrowException;
-        }
-
-        // the return bool value indicates whether to continue with retries or not.
-        exceptionCallback(ex);
-        return RetryAction.Retry;
+            // If the exception is in the list of exceptions to retry on and we have not reached the maximum number of retries,
+            true => HandleCallBackAndRetry(exceptionCallback!, ex),
+            // If the exception is not in the list of exceptions to retry on,
+            // or if we have reached the maximum number of retries, we should throw the exception.
+            // we should throw the exception.
+            false => _retryPolicy.GracefulExceptionHandling ? RetryAction.GracefulExit : RetryAction.ThrowException
+        };
     }
 
     /// <summary>
@@ -212,17 +166,14 @@ internal sealed class RetryExecutor : IRetryExecutor
     /// <returns>The timespan to wait until the next iteration.</returns>
     /// <exception cref="NotImplementedException">Thrown when the specified backoff strategy is not yet supported</exception>
     /// <exception cref="ArgumentOutOfRangeException">Thrown when the specified backoff strategy is out of range</exception>
-    private TimeSpan DetermineDelayUntilNextIteration(int retryCount)
-    {
-        var delay = _retryPolicy.BackoffStrategy switch
+    private TimeSpan DetermineDelayUntilNextIteration(int retryCount) =>
+        _retryPolicy.BackoffStrategy switch
         {
             BackoffStrategy.Linear => _retryPolicy.DelayBetweenRetries * retryCount,
             BackoffStrategy.Fixed => _retryPolicy.DelayBetweenRetries,
             BackoffStrategy.Exponential => _retryPolicy.DelayBetweenRetries * (retryCount * retryCount),
             BackoffStrategy.Fibonacci => _retryPolicy.DelayBetweenRetries * Fibonacci.CalculateNumberAtIndex(retryCount),
             BackoffStrategy.Polynomial => _retryPolicy.DelayBetweenRetries * Math.Pow(retryCount, _retryPolicy.PolynomialFactor),
-            _ => throw new ArgumentOutOfRangeException($"{_retryPolicy.BackoffStrategy} is not a valid backoff strategy.")
+            _ => throw new ArgumentOutOfRangeException(nameof(_retryPolicy.BackoffStrategy), _retryPolicy.BackoffStrategy, "is not a valid backoff strategy.")
         };
-        return delay;
-    }
 }
