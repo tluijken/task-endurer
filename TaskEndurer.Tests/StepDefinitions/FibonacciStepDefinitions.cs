@@ -25,28 +25,13 @@ public class FibonacciStepDefinitions
     }
 
     [Given(@"We retrieve a list of (.*) fibonacci numbers")]
-    public void GivenWeRetrieveAListOfFibonacciNumbers(int numberOfItems)
+    public void GivenWeRetrieveAListOfFibonacciNumbers(uint numberOfItems)
     {
         var scenarioContext = _serviceProvider.GetRequiredService<ScenarioContext>();
-        for (var i = 0; i < numberOfItems; i++)
+        for (uint i = 0; i < numberOfItems; i++)
         {
             var value = Fibonacci.CalculateNumberAtIndex(i);
             scenarioContext.Set(value, i.ToString());
         }
-    }
-
-    [Given(@"We retrieve a fibonacci number at a negative index")]
-    public void GivenWeRetrieveAFibonacciNumberAtANegativeIndex()
-    {
-        try
-        {
-            Fibonacci.CalculateNumberAtIndex(-1);
-        }
-        catch (ArgumentOutOfRangeException e)
-        {
-            var scenarioContext = _serviceProvider.GetRequiredService<ScenarioContext>();
-            scenarioContext.Set(e, Constants.RetryExceptionKey);
-        }
-        
     }
 }

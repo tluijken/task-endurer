@@ -96,7 +96,7 @@ internal sealed class RetryExecutor : IRetryExecutor
     /// <returns></returns>
     private async Task<T> ExecuteAndCatchAsync<T>(Func<Task<T>> taskToExecute, CancellationToken cancellationToken)
     {
-        var retryCount = 0;
+        uint retryCount = 0;
         while (true)
         {
             try
@@ -144,7 +144,7 @@ internal sealed class RetryExecutor : IRetryExecutor
     /// <returns>
     ///     The next action to take.
     /// </returns>
-    private RetryAction GetNextRetryAction(Exception ex, int retryCount)
+    private RetryAction GetNextRetryAction(Exception ex, uint retryCount)
     {
         var maxRetriesReached = _retryPolicy.MaxRetries.HasValue && retryCount >= _retryPolicy.MaxRetries;
         var exceptionCallback = _retryPolicy.ExceptionCallbacksByType.TryGetValue(ex.GetType(), out var cb) ? cb : null;
@@ -166,7 +166,7 @@ internal sealed class RetryExecutor : IRetryExecutor
     /// <returns>The timespan to wait until the next iteration.</returns>
     /// <exception cref="NotImplementedException">Thrown when the specified backoff strategy is not yet supported</exception>
     /// <exception cref="ArgumentOutOfRangeException">Thrown when the specified backoff strategy is out of range</exception>
-    private TimeSpan DetermineDelayUntilNextIteration(int retryCount) =>
+    private TimeSpan DetermineDelayUntilNextIteration(uint retryCount) =>
         _retryPolicy.BackoffStrategy switch
         {
             BackoffStrategy.Linear => _retryPolicy.DelayBetweenRetries * retryCount,

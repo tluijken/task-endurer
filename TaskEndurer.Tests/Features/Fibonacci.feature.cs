@@ -137,36 +137,6 @@ namespace TaskEndurer.Tests.Features
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Get a fibonacci number at a negative index")]
-        [Xunit.TraitAttribute("FeatureTitle", "Fibonacci")]
-        [Xunit.TraitAttribute("Description", "Get a fibonacci number at a negative index")]
-        [Xunit.TraitAttribute("Category", "Fibonacci")]
-        public void GetAFibonacciNumberAtANegativeIndex()
-        {
-            string[] tagsOfScenario = new string[] {
-                    "Fibonacci"};
-            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get a fibonacci number at a negative index", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 19
-    this.ScenarioInitialize(scenarioInfo);
-#line hidden
-            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
-            {
-                testRunner.SkipScenario();
-            }
-            else
-            {
-                this.ScenarioStart();
-#line 20
-        testRunner.Given("We retrieve a fibonacci number at a negative index", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line hidden
-#line 21
-        testRunner.Then("the task should fail", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-            }
-            this.ScenarioCleanup();
-        }
-        
         [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.9.0.0")]
         [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
         public class FixtureData : System.IDisposable

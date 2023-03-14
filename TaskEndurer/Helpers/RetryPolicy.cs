@@ -35,7 +35,7 @@ public record RetryPolicy
     /// <summary>
     ///     The maximum number of retries.
     /// </summary>
-    internal int? MaxRetries { get; set; }
+    internal uint? MaxRetries { get; set; }
 
     /// <summary>
     ///     The delay in seconds between retries.

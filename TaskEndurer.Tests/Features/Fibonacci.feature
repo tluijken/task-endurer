@@ -14,8 +14,3 @@ Validates our fibonacci calculations
         And The number at index 7 is 13
         And The number at index 8 is 21
         And The number at index 9 is 34
-
-    @Fibonacci
-    Scenario: Get a fibonacci number at a negative index
-        Given We retrieve a fibonacci number at a negative index
-        Then the task should fail

@@ -188,7 +188,7 @@ public class RetryStepDefinitions
     }
 
     [Given(@"the retry policy has a maximum number of retries of (.*)")]
-    public void GivenTheRetryPolicyHasAMaximumNumberOfRetriesOf(int maximumNumberOfRetries)
+    public void GivenTheRetryPolicyHasAMaximumNumberOfRetriesOf(uint maximumNumberOfRetries)
     {
         var scenarioContext = _serviceProvider.GetRequiredService<ScenarioContext>();
         var retryPolicyBuilder = scenarioContext.Get<RetryPolicyBuilder>(Constants.RetryPolicyBuilderKey);

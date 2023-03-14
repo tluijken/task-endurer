@@ -39,7 +39,7 @@ public class RetryPolicyBuilder : GenericFunctionalBuilder<RetryPolicy, RetryPol
     /// <returns>
     ///     An instance of <see cref="RetryPolicyBuilder" />.
     /// </returns>
-    public RetryPolicyBuilder WithMaxRetries(int maxRetries) => Do(policy => policy.MaxRetries = maxRetries);
+    public RetryPolicyBuilder WithMaxRetries(uint maxRetries) => Do(policy => policy.MaxRetries = maxRetries);
 
     /// <summary>
     ///     Specified the delay strategy.
