@@ -25,10 +25,10 @@ public class FibonacciStepDefinitions
     }
 
     [Given(@"We retrieve a list of (.*) fibonacci numbers")]
-    public void GivenWeRetrieveAListOfFibonacciNumbers(int p0)
+    public void GivenWeRetrieveAListOfFibonacciNumbers(int numberOfItems)
     {
         var scenarioContext = _serviceProvider.GetRequiredService<ScenarioContext>();
-        for (var i = 0; i < 10; i++)
+        for (var i = 0; i < numberOfItems; i++)
         {
             var value = Fibonacci.CalculateNumberAtIndex(i);
             scenarioContext.Set(value, i.ToString());

@@ -15,10 +15,11 @@ internal static class Fibonacci
     {
         return index switch
         {
-            < 0 => throw new ArgumentOutOfRangeException(nameof(index)),
+            < 0 => throw new ArgumentOutOfRangeException(nameof(index), "The index must be greater than or equal to zero."),
             0 => 0,
-            1 => 1,
-            _ => CalculateNumberAtIndex(index - 1) + CalculateNumberAtIndex(index - 2)
+            _ => Enumerable.Range(0, index + 1).Aggregate((previous: 0, current: 1), (previousNumbers, current) =>
+                current < 2 ? previousNumbers : (previousNumbers.current, previousNumbers.previous + previousNumbers.current))
+            .current
         };
     }
 }
