@@ -17,10 +17,10 @@ public class FibonacciStepDefinitions
     }
 
     [Then(@"The number at index (.*) is (.*)")]
-    public void ThenTheNumberAtIndexIs(int index, int expectedValue)
+    public void ThenTheNumberAtIndexIs(int index, long expectedValue)
     {
         var scenarioContext = _serviceProvider.GetRequiredService<ScenarioContext>();
-        var fibonacciValue = scenarioContext.Get<int>(index.ToString());
+        var fibonacciValue = scenarioContext.Get<long>(index.ToString());
         Assert.Equal(expectedValue, fibonacciValue);
     }
 
