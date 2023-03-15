@@ -132,13 +132,11 @@ public class RetryPolicyBuilder : GenericFunctionalBuilder<RetryPolicy, RetryPol
     /// <returns>
     ///     An instance of <see cref="RetryPolicyBuilder" />.
     /// </returns>
-    private RetryPolicyBuilder WithPolynomialFactor(double factor)
-    {
-        if (factor <= 0)
+    private RetryPolicyBuilder WithPolynomialFactor(double factor) =>
+        factor switch
         {
-            throw new ArgumentOutOfRangeException(nameof(factor), "The polynomial factor must be greater than zero.");
-        }
-
-        return Do(policy => policy.PolynomialFactor = factor);
-    }
+            <= 0 => throw new ArgumentOutOfRangeException(nameof(factor),
+                "The polynomial factor must be greater than zero."),
+            _ => Do(policy => policy.PolynomialFactor = factor)
+        };
 }
